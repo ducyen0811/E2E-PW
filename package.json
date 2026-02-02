@@ -1,0 +1,37 @@
+{
+  "name": "plwr-typescr-core",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js", 
+  "scripts": {
+    "clean": "rimraf reports/screenshots reports/json reports/html reports/cucumber.html",
+    "test": "npm run clean && cucumber-js",
+    "test:single": "npm run clean && cucumber-js --tags @single",
+    "test:parallel": "npm run clean && cucumber-js --tags @parallel",
+    "test:mobile": "npm run clean && cross-env DEVICE=mobile cucumber-js",
+    "test:desktop": "npm run clean && cross-env DEVICE=desktop cucumber-js",
+    "runner": "node runner.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mercersi/PLWR-TypeScr-core.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mercersi/PLWR-TypeScr-core/issues"
+  },
+  "homepage": "https://github.com/Mercersi/PLWR-TypeScr-core#readme",
+  "dependencies": {
+    "@cucumber/cucumber": "^12.5.0",
+    "@playwright/test": "^1.57.0",
+    "cross-env": "^10.1.0",
+    "dotenv": "^17.2.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "cucumber-html-reporter": "^7.2.0"
+  }
+}

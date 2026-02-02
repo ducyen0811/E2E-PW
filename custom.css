@@ -1,0 +1,19 @@
+/* Make scenario rows full width */
+.row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Force all columns inside rows to full width */
+.row > [class*="col-"] {
+  width: 100% !important;
+  max-width: 100% !important;
+  flex: 0 0 100% !important;
+}
+
+/* Ensure screenshots expand fully */
+.step img,
+.embedding img {
+  max-width: 100% !important;
+  height: auto !important;
+}

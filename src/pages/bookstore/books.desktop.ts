@@ -1,0 +1,23 @@
+import { Page } from "playwright";  
+import { BooksPage  } from "./books.page"
+
+export class BooksDesktopPage extends BooksPage {   
+  constructor(private page: Page) { super(); }
+
+  async open() {
+    await this.page.goto('/books');
+  }
+
+  async search(keyword: string) {
+    await this.page.locator('#searchBox').fill(keyword);
+  }
+
+  async openBookByTitle(title: string) {
+    await this.page.getByRole('link', { name: title }).click();
+  }
+
+  async resultsContain(text: string): Promise<boolean> {
+    const rowsText = await this.page.locator('.rt-tbody').innerText().catch(() => '');
+    return rowsText.toLowerCase().includes(text.toLowerCase());
+  }
+}
