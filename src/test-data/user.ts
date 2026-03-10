@@ -1,11 +1,11 @@
 export const users = {
   valid: {
-    username: 'valid_user',
-    password: 'valid_password'
+    username: 'binhyenx',
+    password: 'Ducyen0811@'
   },
   invalidPassword: {
-    username: 'valid_user',
-    password: 'wrong_password'
+    username: 'binhyenx',
+    password: 'Ducyen123@'
   },
   nonExisting: {
     username: 'non_existing_user',
