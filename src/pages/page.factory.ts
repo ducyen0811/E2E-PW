@@ -10,6 +10,7 @@ import { BooksDesktopPage } from './bookstore/books.desktop';
 import { BooksMobilePage } from './bookstore/books.mobile';
 import { BookDetailPage } from './bookstore/book.detail.page';
 import { ProfilePage } from './bookstore/profile.page';
+import { PracticeFormPage } from './forms/practice-form.page';
 
 export class PageFactory {
   static login(page: Page): LoginPage {
@@ -38,5 +39,9 @@ static bookDetail(page: Page): BookDetailPage {
 
 static profile(page: Page): ProfilePage {
   return new ProfilePage(page);
+}
+
+static practiceForm(page: Page): PracticeFormPage {
+  return new PracticeFormPage(page);
 }
 }

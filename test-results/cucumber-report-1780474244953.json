@@ -1,0 +1,352 @@
+[
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "xác-thực-người-dùng;đăng-nhập-thành-công",
+        "keyword": "Kịch bản",
+        "line": 5,
+        "name": "Đăng nhập thành công",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 4067824799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Khi ",
+            "line": 6,
+            "name": "người dùng đăng nhập bằng thông tin hợp lệ",
+            "match": {
+              "location": "src\\steps\\auth.step.ts:25"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3967136199
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Thì ",
+            "line": 7,
+            "name": "người dùng đăng nhập thành công",
+            "match": {
+              "location": "src\\steps\\auth.step.ts:54"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2939572198
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 767512599
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@smoke",
+            "line": 4
+          },
+          {
+            "name": "@auth",
+            "line": 4
+          },
+          {
+            "name": "@login",
+            "line": 4
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "xác-thực-người-dùng;đăng-nhập-thất-bại-khi-sai-mật-khẩu",
+        "keyword": "Kịch bản",
+        "line": 10,
+        "name": "Đăng nhập thất bại khi sai mật khẩu",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 2514652500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Khi ",
+            "line": 11,
+            "name": "người dùng đăng nhập bằng mật khẩu không hợp lệ",
+            "match": {
+              "location": "src\\steps\\auth.step.ts:29"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3337881598
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Thì ",
+            "line": 12,
+            "name": "thông báo lỗi đăng nhập được hiển thị",
+            "match": {
+              "location": "src\\steps\\auth.step.ts:62"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1948482900
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Và ",
+            "line": 13,
+            "name": "người dùng vẫn ở trang đăng nhập",
+            "match": {
+              "location": "src\\steps\\auth.step.ts:68"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 12735999
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 6727994800
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@auth",
+            "line": 9
+          },
+          {
+            "name": "@login",
+            "line": 9
+          },
+          {
+            "name": "@negative",
+            "line": 9
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "xác-thực-người-dùng;đăng-xuất-thành-công",
+        "keyword": "Kịch bản",
+        "line": 16,
+        "name": "Đăng xuất thành công",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 2450651000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Khi ",
+            "line": 17,
+            "name": "người dùng đăng xuất",
+            "match": {
+              "location": "src\\steps\\auth.step.ts:36"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 6162749000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Thì ",
+            "line": 18,
+            "name": "người dùng được chuyển về trang đăng nhập",
+            "match": {
+              "location": "src\\steps\\auth.step.ts:72"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 11382600
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 3208813399
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@auth",
+            "line": 15
+          },
+          {
+            "name": "@logout",
+            "line": 15
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "xác-thực-người-dùng;đăng-ký-thất-bại-khi-email-không-hợp-lệ",
+        "keyword": "Kịch bản",
+        "line": 26,
+        "name": "Đăng ký thất bại khi email không hợp lệ",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 2396988799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Khi ",
+            "line": 27,
+            "name": "người dùng đăng ký bằng email không hợp lệ",
+            "match": {
+              "location": "src\\steps\\auth.step.ts:47"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1012661600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Thì ",
+            "line": 28,
+            "name": "thông báo lỗi đăng ký được hiển thị",
+            "match": {
+              "location": "src\\steps\\auth.step.ts:80"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 68562400
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 8694097199
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@auth",
+            "line": 25
+          },
+          {
+            "name": "@register",
+            "line": 25
+          },
+          {
+            "name": "@negative",
+            "line": 25
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "xác-thực-người-dùng;đăng-ký-thành-công",
+        "keyword": "Kịch bản",
+        "line": 21,
+        "name": "Đăng ký thành công",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 2397248999
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Khi ",
+            "line": 22,
+            "name": "người dùng đăng ký bằng thông tin hợp lệ",
+            "match": {
+              "location": "src\\steps\\auth.step.ts:43"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3219858199
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Thì ",
+            "line": 23,
+            "name": "đăng ký thành công",
+            "match": {
+              "location": "src\\steps\\auth.step.ts:76"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 701799
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 851467999
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@smoke",
+            "line": 20
+          },
+          {
+            "name": "@auth",
+            "line": 20
+          },
+          {
+            "name": "@register",
+            "line": 20
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "xác-thực-người-dùng",
+    "line": 2,
+    "keyword": "Tính năng",
+    "name": "Xác thực người dùng",
+    "tags": [],
+    "uri": "src\\features\\auth.feature"
+  }
+]

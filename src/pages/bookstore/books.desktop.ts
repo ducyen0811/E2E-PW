@@ -1,4 +1,4 @@
-import { Page } from "playwright";  
+import { expect, Page } from '@playwright/test';
 import { BooksPage  } from "./books.page"
 
 export class BooksDesktopPage extends BooksPage {   
@@ -17,7 +17,7 @@ export class BooksDesktopPage extends BooksPage {
   }
 
   async resultsContain(text: string): Promise<boolean> {
-    const rowsText = await this.page.locator('.rt-tbody').innerText().catch(() => '');
-    return rowsText.toLowerCase().includes(text.toLowerCase());
+    await expect(this.page.getByRole('link', { name: new RegExp(text, 'i') }).first()).toBeVisible();
+    return true;
   }
 }

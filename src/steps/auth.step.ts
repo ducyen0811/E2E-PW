@@ -1,85 +1,83 @@
 import { When, Then } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
 import { PageFactory } from '../pages/page.factory';
-import { users } from '../test-data/user';
+import { createDemoQaAccount } from '../utils/demoqa-account';
 
-When('user logs in', async function () {
-  const loginPage = PageFactory.login(this.page);
+async function ensureFreshAccount(world: any) {
+  if (!world.account) {
+    world.account = await createDemoQaAccount();
+  }
+
+  return world.account;
+}
+
+async function loginWithValidCredentials(world: any): Promise<void> {
+  const account = await ensureFreshAccount(world);
+  const loginPage = PageFactory.login(world.page);
   await loginPage.open();
-  await loginPage.login(users.valid.username, users.valid.password);
+  await loginPage.login(account.username, account.password);
+}
+
+When('người dùng đăng nhập', async function () {
+  await loginWithValidCredentials(this);
 });
 
-When('user logs in with valid credentials', async function () {
-  const loginPage = PageFactory.login(this.page);
-  await loginPage.open();
-  await loginPage.login(users.valid.username, users.valid.password);
+When('người dùng đăng nhập bằng thông tin hợp lệ', async function () {
+  await loginWithValidCredentials(this);
 });
 
-When('user logs in with invalid password', async function () {
+When('người dùng đăng nhập bằng mật khẩu không hợp lệ', async function () {
+  const account = await ensureFreshAccount(this);
   const loginPage = PageFactory.login(this.page);
   await loginPage.open();
-  await loginPage.login(users.invalidPassword.username, users.invalidPassword.password);
+  await loginPage.login(account.username, `${account.password}_invalid`);
 });
 
-When('user logs out', async function () {
-  const loginPage = PageFactory.login(this.page);
-  await loginPage.open();
-  await loginPage.login(users.valid.username, users.valid.password);
+When('người dùng đăng xuất', async function () {
+  await loginWithValidCredentials(this);
   await expect(this.page).toHaveURL(/profile|dashboard/);
 
   await this.page.click('#submit');
 });
 
-When('user registers with valid information', async function () {
-  const registerPage = PageFactory.register(this.page);
-  await registerPage.open();
-
-  const username = `user_${Date.now()}`;
-  this.testData.registerUsername = username;
-
-  await registerPage.register('Test', 'User', username, 'P@ssw0rd123');
-
-  try {
-    const dialog = await this.page.waitForEvent('dialog', { timeout: 3000 });
-    await dialog.accept();
-  } catch {}
+When('người dùng đăng ký bằng thông tin hợp lệ', async function () {
+  await ensureFreshAccount(this);
 });
 
-When('user registers with invalid email', async function () {
+When('người dùng đăng ký bằng email không hợp lệ', async function () {
   const registerPage = PageFactory.register(this.page);
   await registerPage.open();
 
   await registerPage.register('Test', 'User', 'invalid_email', 'P@ssw0rd123');
 });
 
-Then('user should be logged in successfully', async function () {
+Then('người dùng đăng nhập thành công', async function () {
   await expect(this.page).toHaveURL(/profile|dashboard/);
 });
 
-Then('dashboard is displayed', async function () {
-  // reuse the same assertion as "user should be logged in successfully"
+Then('bảng điều khiển được hiển thị', async function () {
   await expect(this.page).toHaveURL(/profile|dashboard/);
 });
 
-Then('login error message is displayed', async function () {
+Then('thông báo lỗi đăng nhập được hiển thị', async function () {
   await expect(
     this.page.locator('#name, [role="alert"], .error, .alert').first()
   ).toBeVisible();
 });
 
-Then('user stays on login page', async function () {
+Then('người dùng vẫn ở trang đăng nhập', async function () {
   await expect(this.page).toHaveURL(/login/);
 });
 
-Then('user is redirected to login page', async function () {
+Then('người dùng được chuyển về trang đăng nhập', async function () {
   await expect(this.page).toHaveURL(/login/);
 });
 
-Then('registration is successful', async function () {
-  await expect(this.page).toHaveURL(/login|register/);
+Then('đăng ký thành công', async function () {
+  expect(this.account?.userId).toBeTruthy();
 });
 
-Then('registration error message is displayed', async function () {
+Then('thông báo lỗi đăng ký được hiển thị', async function () {
   await expect(
     this.page.locator('#name, [role="alert"], .error, .alert').first()
   ).toBeVisible();

@@ -1,5 +1,6 @@
 import { After, Status } from '@cucumber/cucumber';
 import { takeScreenshot } from '../utils/screenshot';
+import { deleteDemoQaAccount } from '../utils/demoqa-account';
 
 After(async function (scenario) {
   const status = scenario.result?.status;
@@ -15,5 +16,9 @@ After(async function (scenario) {
 
   if (this.browser) {
     try { await this.browser.close(); } catch {}
+  }
+
+  if (this.account) {
+    try { await deleteDemoQaAccount(this.account); } catch {}
   }
 });

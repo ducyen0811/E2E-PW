@@ -14,7 +14,8 @@ export async function takeScreenshot(page: Page, testName: string): Promise<Buff
 
     // Create filename with timestamp
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const filename = `${testName}-${timestamp}.png`;
+    const safeTestName = testName.replace(/[<>:"/\\|?*]/g, '-');
+    const filename = `${safeTestName}-${timestamp}.png`;
     const filepath = path.join(screenshotsDir, filename);
 
     // Take screenshot with timeout - don't wait for all resources

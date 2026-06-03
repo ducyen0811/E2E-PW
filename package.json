@@ -6,6 +6,12 @@
   "scripts": {
     "clean": "rimraf reports/screenshots reports/json reports/html reports/cucumber.html",
     "test": "npm run clean && cucumber-js",
+    "test:auth": "cross-env NO_REPORT=true cucumber-js --tags \"@auth\"",
+    "test:bookstore": "cross-env NO_REPORT=true cucumber-js --tags \"@bookstore\"",
+    "test:forms": "cross-env NO_REPORT=true cucumber-js --tags \"@forms\"",
+    "test:auth:report": "cucumber-js --tags \"@auth\"",
+    "test:bookstore:report": "cucumber-js --tags \"@bookstore\"",
+    "test:forms:report": "cucumber-js --tags \"@forms\"",
     "test:single": "npm run clean && cucumber-js --tags @single",
     "test:parallel": "npm run clean && cucumber-js --tags @parallel",
     "test:mobile": "npm run clean && cross-env DEVICE=mobile cucumber-js",

@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import { expect, Page } from '@playwright/test';
 
 export class ProfilePage {
   constructor(private page: Page) {}
@@ -8,24 +8,27 @@ export class ProfilePage {
   }
 
   async hasBook(title: string): Promise<boolean> {
-    const body = await this.page.locator('.rt-tbody').innerText().catch(() => '');
-    return body.includes(title);
+    const book = this.page.getByRole('link', { name: title }).first();
+
+    try {
+      await expect(book).toBeVisible({ timeout: 5000 });
+      return true;
+    } catch {
+      return false;
+    }
   }
 
   async removeBook(title: string) {
-    const row = this.page.locator('.rt-tr-group', { hasText: title }).first();
-    await row.locator('span[title="Delete"], button:has-text("Delete"), svg').first().click().catch(async () => {
-      await this.page.getByRole('button', { name: /Delete/i }).first().click();
-    });
+    const book = this.page.getByRole('link', { name: title });
+    await expect(book).toBeVisible();
+    await this.page.locator('span[title="Delete"]').first().click();
 
-    try {
-      await this.page.getByRole('button', { name: /OK/i }).click({ timeout: 2000 });
-    } catch {}
+    const dialogPromise = this.page.waitForEvent('dialog', { timeout: 5000 })
+      .then((dialog) => dialog.accept())
+      .catch(() => undefined);
 
-    // alert 
-    try {
-      const dialog = await this.page.waitForEvent('dialog', { timeout: 3000 });
-      await dialog.accept();
-    } catch {}
+    await this.page.locator('#closeSmallModal-ok').click();
+    await dialogPromise;
+    await expect(book).toBeHidden({ timeout: 10000 });
   }
 }

@@ -1,9 +1,9 @@
 import { LoginPage } from './login.page';
 import { Page } from '@playwright/test';
 
-const usernameInputXpath = '//input[@placeholder="UserName"]';
-const passwordInputXpath = '//input[@placeholder="Password"]';
-const loginButtonXpath = '//button[text()="Login"]';
+const usernameInput = '#userName';
+const passwordInput = '#password';
+const loginButton = '#login';
 
 export class LoginDesktopPage extends LoginPage {
   constructor(private page: Page) {
@@ -15,8 +15,8 @@ export class LoginDesktopPage extends LoginPage {
   }
 
   async login(username: string, password: string) {
-    await this.page.fill(usernameInputXpath, username);
-    await this.page.fill(passwordInputXpath, password);
-    await this.page.click(loginButtonXpath);
+    await this.page.locator(usernameInput).fill(username);
+    await this.page.locator(passwordInput).fill(password);
+    await this.page.locator(loginButton).click();
   }
 }
