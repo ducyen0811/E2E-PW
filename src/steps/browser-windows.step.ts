@@ -1,28 +1,28 @@
 import { Given, When, Then } from '@cucumber/cucumber';
 import { PageFactory } from '../pages/page.factory';
 
-Given('người dùng đang ở trang Browser Windows', async function () {
+Given('the user is on the Browser Windows page', async function () {
   const browserWindows = PageFactory.browserWindows(this.page);
   await browserWindows.open();
   await browserWindows.expectLoaded();
 });
 
-When('người dùng mở tab mới từ trang Browser Windows', async function () {
+When('the user opens a new tab from the Browser Windows page', async function () {
   const browserWindows = PageFactory.browserWindows(this.page);
   await browserWindows.openNewTabAndExpectSamplePage();
 });
 
-When('người dùng mở cửa sổ mới từ trang Browser Windows', async function () {
+When('the user opens a new window from the Browser Windows page', async function () {
   const browserWindows = PageFactory.browserWindows(this.page);
   await browserWindows.openNewWindowAndExpectSamplePage();
 });
 
-When('người dùng mở cửa sổ thông báo mới từ trang Browser Windows', async function () {
+When('the user opens a new message window from the Browser Windows page', async function () {
   const browserWindows = PageFactory.browserWindows(this.page);
   await browserWindows.openNewMessageWindowAndExpectMessage();
 });
 
-Then('trang Browser Windows vẫn hiển thị bình thường', async function () {
+Then('the Browser Windows page remains visible', async function () {
   const browserWindows = PageFactory.browserWindows(this.page);
   await browserWindows.expectLoaded();
 });

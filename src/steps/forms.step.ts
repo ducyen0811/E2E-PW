@@ -10,13 +10,13 @@ const validPracticeFormData: PracticeFormData = {
   mobile: '0987654321'
 };
 
-When('người dùng gửi biểu mẫu thực hành với dữ liệu hợp lệ', async function () {
+When('the user submits the practice form with valid data', async function () {
   const practiceForm = PageFactory.practiceForm(this.page);
   await practiceForm.open();
   await practiceForm.submit(validPracticeFormData);
 });
 
-Then('modal biểu mẫu đã gửi hiển thị đúng dữ liệu', async function () {
+Then('the submitted form modal displays the correct data', async function () {
   const practiceForm = PageFactory.practiceForm(this.page);
   await practiceForm.expectSubmittedData(validPracticeFormData);
 });

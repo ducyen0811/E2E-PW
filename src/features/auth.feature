@@ -1,28 +1,39 @@
-# language: vi
-Tính năng: Xác thực người dùng
+Feature: User authentication
 
   @smoke @auth @login
-  Kịch bản: Đăng nhập thành công
-    Khi người dùng đăng nhập bằng thông tin hợp lệ
-    Thì người dùng đăng nhập thành công
+  Scenario: Log in successfully
+    When the user logs in with valid credentials
+    Then the user is logged in successfully
 
   @auth @login @negative
-  Kịch bản: Đăng nhập thất bại khi sai mật khẩu
-    Khi người dùng đăng nhập bằng mật khẩu không hợp lệ
-    Thì thông báo lỗi đăng nhập được hiển thị
-    Và người dùng vẫn ở trang đăng nhập
+  Scenario: Fail to log in with an invalid password
+    When the user logs in with an invalid password
+    Then the login error message is displayed
+    And the user remains on the login page
+
+  @auth @login @negative
+  Scenario: Fail to log in with an empty username
+    When the user logs in with an empty username
+    Then the login error message is displayed
+    And the user remains on the login page
+
+  @auth @login @negative
+  Scenario: Fail to log in with an empty password
+    When the user logs in with an empty password
+    Then the login error message is displayed
+    And the user remains on the login page
 
   @auth @logout
-  Kịch bản: Đăng xuất thành công
-    Khi người dùng đăng xuất
-    Thì người dùng được chuyển về trang đăng nhập
+  Scenario: Log out successfully
+    When the user logs out
+    Then the user is redirected to the login page
 
   @smoke @auth @register
-  Kịch bản: Đăng ký thành công
-    Khi người dùng đăng ký bằng thông tin hợp lệ
-    Thì đăng ký thành công
+  Scenario: Register successfully
+    When the user registers with valid information
+    Then registration is successful
 
   @auth @register @negative
-  Kịch bản: Đăng ký thất bại khi email không hợp lệ
-    Khi người dùng đăng ký bằng email không hợp lệ
-    Thì thông báo lỗi đăng ký được hiển thị
+  Scenario: Fail to register with an invalid email
+    When the user registers with an invalid email
+    Then the registration error message is displayed

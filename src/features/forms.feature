@@ -1,7 +1,6 @@
-# language: vi
-Tính năng: Biểu mẫu
+Feature: Forms
 
   @smoke @forms
-  Kịch bản: Gửi biểu mẫu thực hành thành công
-    Khi người dùng gửi biểu mẫu thực hành với dữ liệu hợp lệ
-    Thì modal biểu mẫu đã gửi hiển thị đúng dữ liệu
+  Scenario: Submit the practice form successfully
+    When the user submits the practice form with valid data
+    Then the submitted form modal displays the correct data

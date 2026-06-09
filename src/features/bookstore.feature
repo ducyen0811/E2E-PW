@@ -1,17 +1,16 @@
-# language: vi
-Tính năng: Cửa hàng sách
+Feature: Bookstore
 
   @smoke @bookstore
-  Kịch bản: Tìm sách theo từ khóa
-    Khi người dùng tìm sách với từ khóa "Git"
-    Thì kết quả tìm kiếm phải chứa "Git"
+  Scenario: Search books by keyword
+    When the user searches books with keyword "Git"
+    Then the search results should contain "Git"
 
   @bookstore
-  Kịch bản: Thêm sách vào bộ sưu tập
-    Khi người dùng thêm sách "Git Pocket Guide" vào bộ sưu tập
-    Thì sách "Git Pocket Guide" phải xuất hiện trong bộ sưu tập hồ sơ
+  Scenario: Add a book to the collection
+    When the user adds book "Git Pocket Guide" to the collection
+    Then book "Git Pocket Guide" should appear in the profile collection
 
   @bookstore
-  Kịch bản: Xóa sách khỏi bộ sưu tập
-    Khi người dùng xóa sách "Git Pocket Guide" khỏi bộ sưu tập hồ sơ
-    Thì sách "Git Pocket Guide" không còn xuất hiện trong bộ sưu tập hồ sơ
+  Scenario: Remove a book from the collection
+    When the user removes book "Git Pocket Guide" from the profile collection
+    Then book "Git Pocket Guide" should no longer appear in the profile collection

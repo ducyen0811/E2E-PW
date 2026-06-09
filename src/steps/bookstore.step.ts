@@ -30,7 +30,7 @@ async function loginIfNeeded(world: any) {
   }
 }
 
-When('người dùng tìm sách với từ khóa {string}', async function (keyword: string) {
+When('the user searches books with keyword {string}', async function (keyword: string) {
   await loginIfNeeded(this);
 
   const books = PageFactory.books(this.page);
@@ -38,13 +38,13 @@ When('người dùng tìm sách với từ khóa {string}', async function (keyw
   await books.search(keyword);
 });
 
-Then('kết quả tìm kiếm phải chứa {string}', async function (text: string) {
+Then('the search results should contain {string}', async function (text: string) {
   const books = PageFactory.books(this.page);
   const ok = await books.resultsContain(text);
   expect(ok).toBeTruthy();
 });
 
-When('người dùng thêm sách {string} vào bộ sưu tập', async function (title: string) {
+When('the user adds book {string} to the collection', async function (title: string) {
   await loginIfNeeded(this);
 
   const books = PageFactory.books(this.page);
@@ -55,13 +55,13 @@ When('người dùng thêm sách {string} vào bộ sưu tập', async function 
   await PageFactory.bookDetail(this.page).addToCollection();
 });
 
-Then('sách {string} phải xuất hiện trong bộ sưu tập hồ sơ', async function (title: string) {
+Then('book {string} should appear in the profile collection', async function (title: string) {
   const profile = PageFactory.profile(this.page);
   await profile.open();
   expect(await profile.hasBook(title)).toBeTruthy();
 });
 
-When('người dùng xóa sách {string} khỏi bộ sưu tập hồ sơ', async function (title: string) {
+When('the user removes book {string} from the profile collection', async function (title: string) {
   await loginIfNeeded(this);
 
   const books = PageFactory.books(this.page);
@@ -75,7 +75,7 @@ When('người dùng xóa sách {string} khỏi bộ sưu tập hồ sơ', async
   await profile.removeBook(title);
 });
 
-Then('sách {string} không còn xuất hiện trong bộ sưu tập hồ sơ', async function (title: string) {
+Then('book {string} should no longer appear in the profile collection', async function (title: string) {
   const profile = PageFactory.profile(this.page);
   await profile.open();
   expect(await profile.hasBook(title)).toBeFalsy();

@@ -1,20 +1,19 @@
-# language: vi
-Tính năng: Cửa sổ trình duyệt
+Feature: Browser windows
 
   @smoke @browser-windows
-  Kịch bản: Mở tab mới từ trang Browser Windows
-    Cho người dùng đang ở trang Browser Windows
-    Khi người dùng mở tab mới từ trang Browser Windows
-    Thì trang Browser Windows vẫn hiển thị bình thường
+  Scenario: Open a new tab from the Browser Windows page
+    Given the user is on the Browser Windows page
+    When the user opens a new tab from the Browser Windows page
+    Then the Browser Windows page remains visible
 
   @smoke @browser-windows
-  Kịch bản: Mở cửa sổ mới từ trang Browser Windows
-    Cho người dùng đang ở trang Browser Windows
-    Khi người dùng mở cửa sổ mới từ trang Browser Windows
-    Thì trang Browser Windows vẫn hiển thị bình thường
+  Scenario: Open a new window from the Browser Windows page
+    Given the user is on the Browser Windows page
+    When the user opens a new window from the Browser Windows page
+    Then the Browser Windows page remains visible
 
   @smoke @browser-windows
-  Kịch bản: Mở cửa sổ thông báo mới từ trang Browser Windows
-    Cho người dùng đang ở trang Browser Windows
-    Khi người dùng mở cửa sổ thông báo mới từ trang Browser Windows
-    Thì trang Browser Windows vẫn hiển thị bình thường
+  Scenario: Open a new message window from the Browser Windows page
+    Given the user is on the Browser Windows page
+    When the user opens a new message window from the Browser Windows page
+    Then the Browser Windows page remains visible
