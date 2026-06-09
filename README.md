@@ -82,7 +82,9 @@ E2E-PW/
 |   |   |   |-- book.detail.page.ts        # Book detail actions
 |   |   |   `-- profile.page.ts            # Profile/book collection actions
 |   |   |-- forms/
-|   |   |   `-- practice-form.page.ts      # Practice form page object
+|   |   |   |-- practice-form.page.ts      # Abstract contract
+|   |   |   |-- practice-form.desktop.ts   # Desktop implementation
+|   |   |   `-- practice-form.mobile.ts    # Mobile implementation
 |   |   |-- login/
 |   |   |   |-- login.page.ts              # Abstract contract
 |   |   |   |-- login.desktop.ts           # Desktop implementation

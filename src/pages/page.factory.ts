@@ -11,6 +11,8 @@ import { BooksMobilePage } from './bookstore/books.mobile';
 import { BookDetailPage } from './bookstore/book.detail.page';
 import { ProfilePage } from './bookstore/profile.page';
 import { PracticeFormPage } from './forms/practice-form.page';
+import { PracticeFormDesktopPage } from './forms/practice-form.desktop';
+import { PracticeFormMobilePage } from './forms/practice-form.mobile';
 import { BrowserWindowsPage } from './browser-windows/browser-windows.page';
 import { BrowserWindowsDesktopPage } from './browser-windows/browser-windows.desktop';
 import { BrowserWindowsMobilePage } from './browser-windows/browser-windows.mobile';
@@ -45,7 +47,10 @@ static profile(page: Page): ProfilePage {
 }
 
 static practiceForm(page: Page): PracticeFormPage {
-  return new PracticeFormPage(page);
+  const width = page.viewportSize()?.width ?? 0;
+  return width < 768
+    ? new PracticeFormMobilePage(page)
+    : new PracticeFormDesktopPage(page);
 }
 
 static browserWindows(page: Page): BrowserWindowsPage {
