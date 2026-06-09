@@ -1,26 +1,25 @@
 # PLWR-TypeScr-core
 
-A modern, lightweight **Playwright + Cucumber + TypeScript** automation testing framework with advanced features for both single and parallel test execution.
+A modern, lightweight **Playwright + Cucumber + TypeScript** automation testing framework for DemoQA E2E testing, using BDD feature files, Page Object Model, desktop/mobile page implementations, screenshots, and HTML/JSON reports.
 
 ## Features
 
-✨ **Core Features:**
-- ✅ **BDD Framework**: Cucumber with Gherkin syntax for readable test scenarios
-- ✅ **Cross-Platform**: Support for Desktop and Mobile (iPhone 14) testing
-- ✅ **Parallel Execution**: Run multiple tests simultaneously for faster execution
-- ✅ **Ordered Test Execution**: Run @single tests sequentially first, then @parallel tests in parallel
-- ✅ **Automatic Screenshots**: Captures screenshots automatically when steps fail with error messages
-- ✅ **AfterStep Hook**: Enhanced failure reporting with per-step error logging and screenshot attachment
-- ✅ **HTML Reports**: Beautiful Cucumber HTML reports with embedded screenshots and test results
-- ✅ **Smart Report Generation**: Automatically detects and uses the most complete test results (largest JSON file)
-- ✅ **Environment Configuration**: Easy setup via `.env` file
-- ✅ **Advanced Test Runner**: Flexible CLI runner with multiple execution modes
-- ✅ **TypeScript Support**: Full type safety and IntelliSense support
-- ✅ **Page Object Model**: Organized page structure with separate desktop and mobile implementations
+**Core Features:**
+- **BDD Framework**: Cucumber with Gherkin syntax. Current feature files use Vietnamese syntax via `# language: vi`.
+- **Playwright Automation**: Chromium browser execution with configurable headed/headless mode.
+- **Desktop/Mobile Support**: `DEVICE=desktop` uses a 1440x900 viewport; `DEVICE=mobile` uses the Playwright iPhone 14 profile.
+- **Page Object Model**: Step definitions call page objects instead of putting UI logic directly inside steps.
+- **PageFactory Pattern**: `PageFactory` selects desktop or mobile page implementations based on viewport width.
+- **Relative Navigation**: Browser contexts are created with `baseURL`, so page objects can use `page.goto('/path')`.
+- **Automatic Screenshots**: Failed scenarios attach screenshots to the Cucumber report.
+- **AfterStep Hook**: Failed steps can attach extra error context.
+- **Reports**: Cucumber JSON/HTML reports are generated under `reports/`.
+- **Environment Configuration**: Runtime options are controlled through `.env`.
+- **TypeScript Support**: Step definitions, hooks, config, and page objects are written in TypeScript.
 
 ## Prerequisites
 
-- **Node.js** v16+ (recommended v18+)
+- **Node.js** v16+ recommended v18+
 - **npm** v8+
 
 ## Installation & Setup
@@ -33,70 +32,88 @@ npm install
 
 ### 2. Configure Environment Variables
 
-Create a `.env` file in the project root:
+Create or update a `.env` file in the project root:
 
 ```properties
-# Base URL of the application
 BASE_URL=https://demoqa.com
-
-# Browser settings
 HEADLESS=false
 DEVICE=desktop
-
-# Timeouts (milliseconds)
 WAIT_MS=5000
 NAVIGATION_TIMEOUT_MS=30000
-
-# Parallel execution workers
 PARALLEL=2
 ```
 
 **Configuration Options:**
-- `BASE_URL` - The application URL (required)
-- `HEADLESS` - Run browser in headless mode (`true`/`false`)
-- `DEVICE` - Target device (`desktop` or `mobile`)
-- `WAIT_MS` - Timeout for actions/locators (default: 5000ms)
-- `NAVIGATION_TIMEOUT_MS` - Timeout for page navigation (default: 30000ms)
-- `PARALLEL` - Number of parallel workers (default: 2)
+- `BASE_URL` - Base application URL. Required.
+- `HEADLESS` - Run browser in headless mode: `true` or `false`.
+- `DEVICE` - Target device: `desktop` or `mobile`.
+- `WAIT_MS` - Default timeout for locators/actions.
+- `NAVIGATION_TIMEOUT_MS` - Default timeout for page navigation.
+- `PARALLEL` - Parallel worker count used by runner/CLI flows.
 
 ## Framework Structure
 
-```
-PLWR-TypeScr-core/
-├── src/
-│   ├── config/
-│   │   ├── driver.factory.ts       # Browser instance creation
-│   │   └── env.ts                  # Environment configuration
-│   ├── features/
-│   │   └── auth.feature           # Cucumber feature files
-│   ├── hooks/
-│   │   ├── before.ts               # Pre-test setup (browser creation, navigation)
-│   │   ├── after.ts                # Post-test teardown (screenshot capture, browser close)
-│   │   └── afterStep.ts            # Per-step failure detection with error logging
-│   ├── pages/
-│   │   ├── base.page.ts            # Base page class with common methods
-│   │   ├── page.factory.ts         # Page factory for device selection
-│   │   └── login/
-│   │       ├── login.page.ts       # Login page interface
-│   │       ├── login.desktop.ts    # Desktop-specific implementation
-│   │       └── login.mobile.ts     # Mobile-specific implementation
-│   │
-│   ├── steps/
-│   │   └── auth.step.ts           # Step definitions for login scenarios
-│   │   └── bookstore.step.ts           # Step definitions for books scenarios 
-│   ├── utils/
-│   │   └── screenshot.ts           # Screenshot utility for failure capture
-│   └── world/
-│       └── custom.world.ts         # Cucumber World object definition
-├── reports/
-│   ├── cucumber.html               # Generated HTML report
-│   └── screenshots/                # Screenshots from failed steps
-├── .env                            # Environment variables
-├── cucumber.js                     # Cucumber configuration
-├── runner.js                       # Advanced test runner script
-├── tsconfig.json                   # TypeScript configuration
-├── package.json                    # Dependencies & scripts
-└── README.md                       # This file
+```text
+E2E-PW/
+|-- src/
+|   |-- config/
+|   |   |-- driver.factory.ts              # Creates browser/context/page and applies baseURL/timeouts
+|   |   `-- env.ts                         # Reads .env values
+|   |-- features/
+|   |   |-- auth.feature                   # Login/logout/register scenarios
+|   |   |-- bookstore.feature              # Book search/collection scenarios
+|   |   |-- browser-windows.feature        # New tab/window popup scenarios
+|   |   `-- forms.feature                  # Practice form scenario
+|   |-- hooks/
+|   |   |-- before.ts                      # Creates page before each scenario
+|   |   |-- after.ts                       # Screenshots, browser close, account cleanup
+|   |   `-- afterStep.ts                   # Per-step failure attachment
+|   |-- pages/
+|   |   |-- base.page.ts                   # Shared base page helper
+|   |   |-- page.factory.ts                # Returns the correct page object implementation
+|   |   |-- browser-windows/
+|   |   |   |-- browser-windows.page.ts    # Abstract contract
+|   |   |   |-- browser-windows.desktop.ts # Desktop implementation
+|   |   |   `-- browser-windows.mobile.ts  # Mobile implementation
+|   |   |-- bookstore/
+|   |   |   |-- books.page.ts              # Abstract contract
+|   |   |   |-- books.desktop.ts           # Desktop implementation
+|   |   |   |-- books.mobile.ts            # Mobile implementation
+|   |   |   |-- book.detail.page.ts        # Book detail actions
+|   |   |   `-- profile.page.ts            # Profile/book collection actions
+|   |   |-- forms/
+|   |   |   `-- practice-form.page.ts      # Practice form page object
+|   |   |-- login/
+|   |   |   |-- login.page.ts              # Abstract contract
+|   |   |   |-- login.desktop.ts           # Desktop implementation
+|   |   |   `-- login.mobile.ts            # Mobile implementation
+|   |   `-- register/
+|   |       |-- register.page.ts           # Abstract contract
+|   |       |-- register.desktop.ts        # Desktop implementation
+|   |       `-- register.mobile.ts         # Mobile implementation
+|   |-- steps/
+|   |   |-- auth.step.ts                   # Authentication step definitions
+|   |   |-- bookstore.step.ts              # Bookstore step definitions
+|   |   |-- browser-windows.step.ts        # Browser windows step definitions
+|   |   `-- forms.step.ts                  # Form step definitions
+|   |-- test-data/
+|   |   `-- user.ts                        # Test user data
+|   |-- utils/
+|   |   |-- demoqa-account.ts              # DemoQA account helper
+|   |   `-- screenshot.ts                  # Screenshot helper
+|   `-- world/
+|       `-- custom.world.ts                # Cucumber World object
+|-- reports/
+|   |-- html/                              # Generated HTML reports
+|   |-- json/                              # Generated JSON reports
+|   `-- screenshots/                       # Failure screenshots
+|-- test-results/                          # Historical/generated test results
+|-- cucumber.js                            # Cucumber configuration
+|-- generate-cucumber-report.ts            # Report helper
+|-- runner.js                              # Optional advanced runner
+|-- package.json                           # Scripts and dependencies
+|-- tsconfig.json                          # TypeScript config
+`-- README.md
 ```
 
 ## Running Tests
@@ -104,12 +121,10 @@ PLWR-TypeScr-core/
 ### Quick Start
 
 ```bash
-# Run all tests (uses settings from .env)
-node runner.js
-
-# View available options
-node runner.js --help
+npm run test
 ```
+
+This cleans old report output and runs all feature files through `cucumber-js`.
 
 ### Using npm Scripts
 
@@ -117,379 +132,267 @@ node runner.js --help
 # Run all tests
 npm run test
 
-# Run only @single tagged tests (sequential)
-npm run test:single
+# Run auth feature scenarios without report output
+npm run test:auth
 
-# Run only @parallel tagged tests (parallel mode)
+# Run bookstore feature scenarios without report output
+npm run test:bookstore
+
+# Run forms feature scenarios without report output
+npm run test:forms
+
+# Run auth/bookstore/forms with report output
+npm run test:auth:report
+npm run test:bookstore:report
+npm run test:forms:report
+
+# Run tagged suites
+npm run test:single
 npm run test:parallel
 
-# Run tests on mobile device
+# Run all tests by device
+npm run test:desktop
 npm run test:mobile
 
-# Run tests on desktop device
-npm run test:desktop
+# Run the custom runner
+npm run runner
 
-# Clean reports folder
+# Clean report output
 npm run clean
 ```
 
-### Advanced Test Runner (runner.js)
+### Using Cucumber Directly
 
-The `runner.js` script provides advanced execution modes:
+```bash
+# Run a specific tag
+npx cucumber-js --tags "@auth"
 
-**Default Mode (Ordered Execution):**
+# Run smoke tests
+npx cucumber-js --tags "@smoke"
+
+# Run browser windows scenarios
+npx cucumber-js --tags "@browser-windows"
+
+# Exclude tests
+npx cucumber-js --tags "not @negative"
+
+# Run on desktop/mobile with cross-env
+npx cross-env DEVICE=desktop cucumber-js --tags "@smoke"
+npx cross-env DEVICE=mobile cucumber-js --tags "@smoke"
+```
+
+### Runner Usage
+
+`runner.js` is available for custom execution flows:
+
 ```bash
 node runner.js
-```
-- Runs `@single` tests sequentially (1 worker)
-- Then runs `@parallel` tests in parallel mode (from .env setting)
-- Generates summary report
-
-**Specific Tags:**
-```bash
-node runner.js --tags @login
-node runner.js --tags @smoke,@critical
-```
-
-**Override Settings:**
-```bash
-node runner.js --device mobile          # Override DEVICE
-node runner.js --single                 # Force sequential execution
-node runner.js --parallel 4             # Override PARALLEL workers
-node runner.js --headless               # Run headless
-```
-
-**Combined Options:**
-```bash
-node runner.js --tags @critical --device mobile --parallel 4
-```
-
-### Running Tests with Specific Annotations/Tags
-
-You can filter and run tests using tags in multiple ways:
-
-#### Using runner.js (Recommended)
-
-```bash
-# Run specific tag
-node runner.js --tags @login
-
-# Run multiple tags (OR logic - tests with either tag)
-node runner.js --tags @login,@smoke
-
-# Run multiple tags (AND logic - tests with both tags)
-node runner.js --tags "@login and @critical"
-
-# Exclude tags (NOT logic)
-node runner.js --tags "@login and not @skip"
-
-# Complex tag expressions
-node runner.js --tags "@login or @signup"
-node runner.js --tags "(@login or @signup) and not @skip"
-```
-
-#### Using npm Scripts
-
-```bash
-# Run @single tests (sequential mode)
-npm run test:single
-
-# Run @parallel tests (parallel mode)
-npm run test:parallel
-
-# Run all tests (default ordered execution: @single then @parallel)
-npm run test
-```
-
-#### Using Cucumber Directly
-
-```bash
-# Run specific tag
-npx cucumber-js --tags @login
-
-# Multiple tags
-npx cucumber-js --tags "@login and @critical"
-
-# Exclude tags
-npx cucumber-js --tags "@login and not @skip"
-```
-
-#### Combining Tags with Other Options
-
-```bash
-# Run @login tests on mobile, sequentially
-node runner.js --tags @login --device mobile --single
-
-# Run @critical tests in parallel with 4 workers, headless
+node runner.js --help
+node runner.js --tags @smoke
+node runner.js --tags @auth --device mobile
 node runner.js --tags @critical --parallel 4 --headless
-
-# Run @smoke tests on desktop
-node runner.js --tags @smoke --device desktop
 ```
 
-### Tag Reference
+## Current Tags
 
-| Tag | Purpose | Usage |
-|-----|---------|-------|
-| `@single` | Sequential execution | For dependent/flaky tests |
-| `@parallel` | Parallel execution | For independent tests |
-| `@smoke` | Quick smoke tests | Fast sanity checks |
-| `@critical` | Critical functionality | Important business flows |
-| `@login` | Login-related tests | Authentication tests |
-| `@signup` | Sign-up tests | Registration flows |
-| `@skip` | Skip tests | Disable specific tests |
-
-### Tag Expression Examples
-
-```bash
-# Tests tagged with @login
-node runner.js --tags @login
-
-# Tests tagged with @login AND @critical
-node runner.js --tags "@login and @critical"
-
-# Tests tagged with @login OR @signup
-node runner.js --tags "@login or @signup"
-
-# Tests tagged with @login but NOT @skip
-node runner.js --tags "@login and not @skip"
-
-# Tests tagged with (@login OR @signup) AND NOT @skip
-node runner.js --tags "(@login or @signup) and not @skip"
-
-# Tests tagged with @critical AND @smoke but NOT @skip
-node runner.js --tags "@critical and @smoke and not @skip"
-```
+| Tag | Purpose |
+|-----|---------|
+| `@smoke` | Fast sanity scenarios |
+| `@auth` | Authentication feature |
+| `@login` | Login scenarios |
+| `@logout` | Logout scenario |
+| `@register` | Register scenarios |
+| `@negative` | Negative validation scenarios |
+| `@bookstore` | Bookstore feature |
+| `@forms` | Practice form feature |
+| `@browser-windows` | New tab/window feature |
+| `@single` | Sequential test grouping if used |
+| `@parallel` | Parallel-safe test grouping if used |
 
 ## Writing Tests
 
-### Feature File Example
+### Feature File Pattern
+
+Feature files live in `src/features/`. This repo currently uses Vietnamese Gherkin:
 
 ```gherkin
-@login @single
-Feature: User Login
-  As a user
-  I want to log in to the application
-  So that I can access protected features
+# language: vi
+Tinh nang: Cua so trinh duyet
 
-  Scenario: Successful login
-    Given user is on the login page
-    When user enters username "testuser"
-    And user enters password "password123"
-    And user clicks login button
-    Then user should be logged in
-
-@parallel
-Scenario: Failed login with invalid credentials
-  Given user is on the login page
-  When user enters username "invalid"
-  And user enters password "wrong"
-  And user clicks login button
-  Then error message should display
+  @smoke @browser-windows
+  Kich ban: Mo tab moi tu trang Browser Windows
+    Cho nguoi dung dang o trang Browser Windows
+    Khi nguoi dung mo tab moi tu trang Browser Windows
+    Thi trang Browser Windows van hien thi binh thuong
 ```
 
-### Step Definition Example
+Keep feature steps readable and business-focused. UI details should stay in page objects.
+
+### Step Definition Pattern
+
+Step files live in `src/steps/`. A step should call `PageFactory`, then delegate logic to a page object:
 
 ```typescript
-import { Given, When, Then } from '@cucumber/cucumber';
-import { expect } from '@playwright/test';
-
-Given('user is on the login page', async function () {
-  await this.page.goto('/login');
-});
-
-When('user enters username {string}', async function (username) {
-  await this.page.fill('input[name="username"]', username);
-});
-
-Then('user should be logged in', async function () {
-  await expect(this.page).toHaveURL('/dashboard');
+Given('nguoi dung dang o trang Browser Windows', async function () {
+  const browserWindows = PageFactory.browserWindows(this.page);
+  await browserWindows.open();
+  await browserWindows.expectLoaded();
 });
 ```
 
-## Test Tags
+### Page Object Pattern
 
-Use tags to organize and filter tests:
+Each feature area can have:
 
-- **`@single`** - Tests that should run sequentially (slower/resource-intensive tests)
-- **`@parallel`** - Tests that can safely run in parallel
-- **`@smoke`** - Quick smoke tests
-- **`@critical`** - Critical functionality tests
-- **`@login`** - Login-related tests
+- An abstract contract, for example `browser-windows.page.ts`.
+- A desktop implementation, for example `browser-windows.desktop.ts`.
+- A mobile implementation, for example `browser-windows.mobile.ts`.
+- A factory method in `page.factory.ts`.
+
+Example:
+
+```typescript
+export abstract class BrowserWindowsPage {
+  abstract open(): Promise<void>;
+  abstract expectLoaded(): Promise<void>;
+  abstract openNewTabAndExpectSamplePage(): Promise<void>;
+}
+```
+
+The implementation contains the real Playwright logic:
+
+```typescript
+async open(): Promise<void> {
+  await this.page.goto('/browser-windows', { waitUntil: 'domcontentloaded' });
+}
+
+async expectLoaded(): Promise<void> {
+  await expect(this.page.locator('h1')).toHaveText('Browser Windows');
+  await expect(this.page.locator('#tabButton')).toBeVisible();
+}
+```
+
+### Popup/New Tab Pattern
+
+When clicking opens a new tab or window, wait for the `popup` event before clicking:
+
+```typescript
+const popupPromise = this.page.waitForEvent('popup');
+await this.page.locator('#tabButton').click();
+const popup = await popupPromise;
+
+await popup.waitForLoadState('domcontentloaded');
+await expect(popup.locator('#sampleHeading')).toHaveText('This is a sample page');
+await popup.close();
+```
+
+Use `this.page` for the current tab. Use `popup` for the newly opened tab/window.
 
 ## Reports
 
-After test execution:
+Report output is controlled by `cucumber.js`.
 
-- **HTML Report**: `reports/cucumber.html` - Open in browser to view detailed results with pass/fail summary
-- **Screenshots**: `reports/screenshots/` - Automatic screenshots from failed steps
-- **Embedded Screenshots**: Failure screenshots and error messages are embedded in the HTML report
-- **Smart Report Merging**: The system automatically detects and uses the most complete test results when multiple JSON files exist (prioritizes larger files with actual test data)
+When `NO_REPORT` is not `true`, Cucumber writes:
 
-### Viewing Reports
+- JSON report: `reports/json/cucumber-report-<id>.json`
+- HTML report: `reports/html/cucumber-report-<id>.html`
+
+Failed scenarios attach screenshots through `src/hooks/after.ts`.
+
+Some npm scripts set `NO_REPORT=true` to run faster:
 
 ```bash
-# Open HTML report in default browser (macOS)
-open reports/cucumber.html
+npm run test:auth
+npm run test:bookstore
+npm run test:forms
+```
 
-# Open HTML report on Linux
-xdg-open reports/cucumber.html
+Use the `*:report` scripts when you want report files:
 
-# Open HTML report on Windows
-start reports\cucumber.html
-
-# Or simply open the file directly in your browser
+```bash
+npm run test:auth:report
+npm run test:bookstore:report
+npm run test:forms:report
 ```
 
 ## Debugging
 
-### View Current Configuration
+### Run Headed
 
-```bash
-node runner.js --help
+Set this in `.env`:
+
+```properties
+HEADLESS=false
 ```
 
-### Run Single Test
+Then run:
 
 ```bash
-node runner.js --tags @login --single
+npm run test:desktop
 ```
 
-### Run with Headed Mode (see browser actions)
+### Run One Area
 
-Ensure `HEADLESS=false` in `.env`, then run tests normally.
+```bash
+npx cucumber-js --tags "@browser-windows"
+```
 
-### Increase Timeouts for Slow Tests
+### Increase Timeouts
 
 Update `.env`:
+
 ```properties
 WAIT_MS=10000
 NAVIGATION_TIMEOUT_MS=60000
 ```
 
-### Error Capture and Screenshots
+### Override Device Without Editing `.env`
 
-When a step fails, the system automatically:
-
-1. **Captures Error Message**: Logs the failure reason with full stack trace (via `afterStep.ts`)
-2. **Takes Screenshot**: Creates a PNG screenshot at the moment of failure
-3. **Embeds in Report**: Error message and screenshot appear in the HTML report with step name
-
-This happens for each failed step, allowing you to:
-- See exactly what the browser state was when failure occurred
-- Read the complete error message without running tests again
-- Correlate errors with visual failures
-
-The feature is implemented in `src/hooks/afterStep.ts` and runs after each step, checking for failures.
+```bash
+npx cross-env DEVICE=mobile cucumber-js --tags "@smoke"
+```
 
 ## Troubleshooting
 
-### Tests timeout frequently
-- Increase `WAIT_MS` and `NAVIGATION_TIMEOUT_MS` in `.env`
-- Reduce `PARALLEL` workers if system is overloaded
+### `Cannot navigate to invalid URL`
 
-### Screenshots not captured
-- Ensure `reports/` directory exists
-- Check that failed steps are properly detected
-- Verify the `afterStep.ts` hook is running (should see screenshot console messages)
+Check that `BASE_URL` exists in `.env`. `driver.factory.ts` sets `baseURL`, so page objects should normally use relative paths such as:
 
-### HTML report is empty
-- Check that test JSON files have actual content (not just `[]`)
-- Verify `generateFallbackHtmlReport()` is using the correct (largest) JSON file
-- Ensure tests are generating data before report generation is attempted
-- Use `npm run clean` to remove old reports and regenerate
-
-### Parallel tests fail but sequential work fine
-- Add `@single` tag to problematic tests
-- Reduce `PARALLEL` workers
-- Check for race conditions or shared state between tests
-
-## Performance Tips
-
-1. **Use Parallel Execution**: Set `PARALLEL=4` for faster test runs
-2. **Optimize Selectors**: Use specific, fast selectors in page objects
-3. **Use Mobile Device**: Mobile tests may be slower; run on separate suite
-4. **Tag Tests Properly**: Use `@single` for flaky/dependent tests only
-5. **Clean Reports**: Runs automatically clean old screenshots
-
-## CI/CD Integration
-
-### GitHub Actions Example
-
-```yaml
-name: E2E Tests
-on: [push, pull_request]
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - run: npm install
-      - run: HEADLESS=true node runner.js
-      - uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: reports
-          path: reports/
+```typescript
+await this.page.goto('/login');
 ```
+
+### Selector not found or `toBeVisible()` timeout
+
+- Confirm the selector exists on the current page.
+- Confirm the selected device layout does not hide or change the element.
+- Add a page-specific wait only when the element is rendered dynamically.
+
+### Popup test hangs
+
+For new tab/window flows, create the popup promise before the click:
+
+```typescript
+const popupPromise = this.page.waitForEvent('popup');
+await this.page.locator('#tabButton').click();
+const popup = await popupPromise;
+```
+
+### Parallel tests fail but single tests pass
+
+- Check for shared test data or shared DemoQA accounts.
+- Reduce worker count.
+- Put dependent tests under sequential execution.
 
 ## Contributing
 
-1. Create feature files in `src/features/`
-2. Implement step definitions in `src/steps/`
-3. Create page objects in `src/pages/`
-4. Use appropriate tags (`@single` or `@parallel`)
-5. Run tests before committing
+1. Add or update feature files in `src/features/`.
+2. Add step definitions in `src/steps/`.
+3. Put UI logic in `src/pages/`, not directly in steps.
+4. Update `PageFactory` when adding desktop/mobile page implementations.
+5. Use tags that match the feature area.
+6. Run the related test script before committing.
 
 ## License
 
 ISC
-
-## Support
-
-For issues or questions, please check the project structure and configuration before reaching out.
-
-Or with `cross-env` (used in scripts):
-
-```powershell
-npx cross-env WAIT_MS=20000 NAVIGATION_TIMEOUT_MS=60000 DEVICE=desktop cucumber-js
-```
-
-## How timeouts and navigation work in this project
-
-- `src/config/env.ts` reads the `.env` variables and exposes `ENV.wait` and `ENV.navigationTimeout`.
-- `src/config/driver.factory.ts` sets the Playwright `baseURL` on the browser context so page objects can use relative `page.goto('/path')` calls.
-- The created `page` has these timeouts applied:
-	- `page.setDefaultTimeout(ENV.wait)` — applies to actions and locators
-	- `page.setDefaultNavigationTimeout(ENV.navigationTimeout)` — applies to navigation calls
-- `src/hooks/before.ts` also raises the Cucumber hook timeout to `ENV.navigationTimeout` to avoid early hook timeouts.
-
-If you experience locator timeouts (e.g., `page.fill` timing out waiting for a selector):
-
-- Verify the `BASE_URL` is correct and that the page you navigate to contains the selector used in the page object.
-- Check whether the mobile layout uses different selectors or hides elements.
-- Prefer explicit waits in page objects where elements are rendered dynamically, for example:
-
-```ts
-await this.page.waitForSelector('[data-testid="email"]', { state: 'visible', timeout: 20000 });
-await this.page.fill('[data-testid="email"]', email);
-```
-
-
-## Troubleshooting
-
-- "function timed out, ensure the promise resolves within 5000 milliseconds": increase `NAVIGATION_TIMEOUT_MS` or set Cucumber hook timeout in `src/hooks/before.ts` (already wired to `ENV.navigationTimeout`).
-- "Cannot navigate to invalid URL": ensure `BASE_URL` is set and that contexts are created with `baseURL` so `page.goto('/path')` resolves.
-- Selector not found: validate selector exists in the rendered DOM for the chosen device (desktop/mobile). Add `waitForSelector` if necessary.
-
-## Contributing
-
-PRs welcome. Keep changes small and run `npm run test:desktop` locally.
-
----
-
-If you'd like, I can add a short example test or a troubleshooting checklist to the README.
