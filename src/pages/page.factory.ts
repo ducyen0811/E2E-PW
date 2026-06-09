@@ -11,6 +11,9 @@ import { BooksMobilePage } from './bookstore/books.mobile';
 import { BookDetailPage } from './bookstore/book.detail.page';
 import { ProfilePage } from './bookstore/profile.page';
 import { PracticeFormPage } from './forms/practice-form.page';
+import { BrowserWindowsPage } from './browser-windows/browser-windows.page';
+import { BrowserWindowsDesktopPage } from './browser-windows/browser-windows.desktop';
+import { BrowserWindowsMobilePage } from './browser-windows/browser-windows.mobile';
 
 export class PageFactory {
   static login(page: Page): LoginPage {
@@ -43,5 +46,12 @@ static profile(page: Page): ProfilePage {
 
 static practiceForm(page: Page): PracticeFormPage {
   return new PracticeFormPage(page);
+}
+
+static browserWindows(page: Page): BrowserWindowsPage {
+  const width = page.viewportSize()?.width ?? 0;
+  return width < 768
+    ? new BrowserWindowsMobilePage(page)
+    : new BrowserWindowsDesktopPage(page);
 }
 }

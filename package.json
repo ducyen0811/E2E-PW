@@ -20,15 +20,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Mercersi/PLWR-TypeScr-core.git"
+    "url": "git+https://github.com/ducyen0811/E2E-PW.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Mercersi/PLWR-TypeScr-core/issues"
+  "url": "https://github.com/ducyen0811/E2E-PW/issues"
   },
-  "homepage": "https://github.com/Mercersi/PLWR-TypeScr-core#readme",
+  "homepage": "https://github.com/ducyen0811/E2E-PW#readme",
   "dependencies": {
     "@cucumber/cucumber": "^12.5.0",
     "@playwright/test": "^1.57.0",
