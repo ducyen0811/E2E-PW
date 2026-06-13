@@ -16,6 +16,9 @@ import { PracticeFormMobilePage } from './forms/practice-form.mobile';
 import { BrowserWindowsPage } from './browser-windows/browser-windows.page';
 import { BrowserWindowsDesktopPage } from './browser-windows/browser-windows.desktop';
 import { BrowserWindowsMobilePage } from './browser-windows/browser-windows.mobile';
+import { FramesPage } from './frames/frames.page';
+import { FramesDesktopPage } from './frames/frames.desktop';
+import { FramesMobilePage } from './frames/frames.mobile';
 
 export class PageFactory {
   static login(page: Page): LoginPage {
@@ -58,5 +61,12 @@ static browserWindows(page: Page): BrowserWindowsPage {
   return width < 768
     ? new BrowserWindowsMobilePage(page)
     : new BrowserWindowsDesktopPage(page);
+}
+
+static frames(page: Page): FramesPage {
+  const width = page.viewportSize()?.width ?? 0;
+  return width < 768
+    ? new FramesMobilePage(page)
+    : new FramesDesktopPage(page);
 }
 }
