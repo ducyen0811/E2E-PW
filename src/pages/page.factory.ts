@@ -19,6 +19,9 @@ import { BrowserWindowsMobilePage } from './browser-windows/browser-windows.mobi
 import { FramesPage } from './frames/frames.page';
 import { FramesDesktopPage } from './frames/frames.desktop';
 import { FramesMobilePage } from './frames/frames.mobile';
+import { NestedFramesPage } from './nested-frames/nested-frames.page';
+import { NestedFramesDesktopPage } from './nested-frames/nested-frames.desktop';
+import { NestedFramesMobilePage } from './nested-frames/nested-frames.mobile';
 
 export class PageFactory {
   static login(page: Page): LoginPage {
@@ -68,5 +71,12 @@ static frames(page: Page): FramesPage {
   return width < 768
     ? new FramesMobilePage(page)
     : new FramesDesktopPage(page);
+}
+
+static nestedFrames(page: Page): NestedFramesPage {
+  const width = page.viewportSize()?.width ?? 0;
+  return width < 768
+    ? new NestedFramesMobilePage(page)
+    : new NestedFramesDesktopPage(page);
 }
 }

@@ -1,10 +1,22 @@
 import { expect, Page } from '@playwright/test';
 
 export class ProfilePage {
-  constructor(private page: Page) {}
+  constructor(private readonly page: Page) {}
 
-  async open() {
+  async open(): Promise<void> {
     await this.page.goto('/profile');
+  }
+
+  async logout(): Promise<void> {
+    await this.page.getByRole('button', { name: 'Logout' }).click();
+  }
+
+  async expectOpened(): Promise<void> {
+    await expect(this.page).toHaveURL(/profile|dashboard/);
+  }
+
+  async expectRedirectedToLogin(): Promise<void> {
+    await expect(this.page).toHaveURL(/login/);
   }
 
   async hasBook(title: string): Promise<boolean> {
@@ -18,7 +30,7 @@ export class ProfilePage {
     }
   }
 
-  async removeBook(title: string) {
+  async removeBook(title: string): Promise<void> {
     const book = this.page.getByRole('link', { name: title });
     await expect(book).toBeVisible();
     await this.page.locator('span[title="Delete"]').first().click();

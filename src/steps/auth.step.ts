@@ -49,9 +49,10 @@ When('the user logs in with an empty password', async function () {
 
 When('the user logs out', async function () {
   await loginWithValidCredentials(this);
-  await expect(this.page).toHaveURL(/profile|dashboard/);
+  const profilePage = PageFactory.profile(this.page);
+  await profilePage.expectOpened();
 
-  await this.page.click('#submit');
+  await profilePage.logout();
 });
 
 When('the user registers with valid information', async function () {
@@ -66,25 +67,23 @@ When('the user registers with an invalid email', async function () {
 });
 
 Then('the user is logged in successfully', async function () {
-  await expect(this.page).toHaveURL(/profile|dashboard/);
+  await PageFactory.login(this.page).expectLoggedIn();
 });
 
 Then('the dashboard is displayed', async function () {
-  await expect(this.page).toHaveURL(/profile|dashboard/);
+  await PageFactory.login(this.page).expectLoggedIn();
 });
 
 Then('the login error message is displayed', async function () {
-  await expect(
-    this.page.locator('#name, [role="alert"], .error, .alert').first()
-  ).toBeVisible();
+  await PageFactory.login(this.page).expectLoginErrorVisible();
 });
 
 Then('the user remains on the login page', async function () {
-  await expect(this.page).toHaveURL(/login/);
+  await PageFactory.login(this.page).expectOnLoginPage();
 });
 
 Then('the user is redirected to the login page', async function () {
-  await expect(this.page).toHaveURL(/login/);
+  await PageFactory.profile(this.page).expectRedirectedToLogin();
 });
 
 Then('registration is successful', async function () {
@@ -92,7 +91,5 @@ Then('registration is successful', async function () {
 });
 
 Then('the registration error message is displayed', async function () {
-  await expect(
-    this.page.locator('#name, [role="alert"], .error, .alert').first()
-  ).toBeVisible();
+  await PageFactory.register(this.page).expectRegistrationErrorVisible();
 });

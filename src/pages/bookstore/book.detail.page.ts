@@ -1,12 +1,15 @@
-import { Page } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 
 export class BookDetailPage {
-  constructor(private page: Page) {}
+  private readonly addToCollectionButton: Locator;
 
-  async addToCollection() {
-    await this.page.getByRole('button', { name: /Add To Your Collection/i }).click();
+  constructor(private readonly page: Page) {
+    this.addToCollectionButton = page.getByRole('button', { name: /Add To Your Collection/i });
+  }
 
-    // DemoQA thường bật alert
+  async addToCollection(): Promise<void> {
+    await this.addToCollectionButton.click();
+
     try {
       const dialog = await this.page.waitForEvent('dialog', { timeout: 3000 });
       await dialog.accept();

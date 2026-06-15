@@ -21,7 +21,7 @@ async function loginIfNeeded(world: any) {
   await loginPage.open();
   await loginPage.login(account.username, account.password);
   try {
-    await expect(world.page).toHaveURL(/\/profile/, { timeout: 15000 });
+    await PageFactory.profile(world.page).expectOpened();
   } catch (e) {
     const msg = await world.page.locator('#name').first().textContent().catch(() => '');
     throw new Error(
@@ -40,8 +40,7 @@ When('the user searches books with keyword {string}', async function (keyword: s
 
 Then('the search results should contain {string}', async function (text: string) {
   const books = PageFactory.books(this.page);
-  const ok = await books.resultsContain(text);
-  expect(ok).toBeTruthy();
+  await books.expectResultsContain(text);
 });
 
 When('the user adds book {string} to the collection', async function (title: string) {
