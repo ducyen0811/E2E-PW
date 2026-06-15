@@ -1,8 +1,8 @@
 {
   "name": "plwr-typescr-core",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js", 
+  "description": "Playwright, Cucumber, and TypeScript E2E automation project for DemoQA.",
+  "main": "index.js",
   "scripts": {
     "clean": "rimraf reports/screenshots reports/json reports/html reports/cucumber.html",
     "test": "npm run clean && cucumber-js",
@@ -23,11 +23,17 @@
     "type": "git",
     "url": "git+https://github.com/ducyen0811/E2E-PW.git"
   },
-  "keywords": [],
+  "keywords": [
+    "playwright",
+    "cucumber",
+    "typescript",
+    "e2e",
+    "demoqa"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
-  "url": "https://github.com/ducyen0811/E2E-PW/issues"
+    "url": "https://github.com/ducyen0811/E2E-PW/issues"
   },
   "homepage": "https://github.com/ducyen0811/E2E-PW#readme",
   "dependencies": {

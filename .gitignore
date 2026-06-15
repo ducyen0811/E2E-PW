@@ -1,3 +1,5 @@
 /node_modules
 /.env
 /reports
+/test-results
+.DS_Store

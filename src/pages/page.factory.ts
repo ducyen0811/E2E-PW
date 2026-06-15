@@ -30,53 +30,54 @@ export class PageFactory {
       ? new LoginMobilePage(page)
       : new LoginDesktopPage(page);
   }
-  static register(page: Page) : RegisterPage {
+
+  static register(page: Page): RegisterPage {
     const width = page.viewportSize()?.width ?? 0;
     return width < 768
       ? new RegisterMobilePage(page)
       : new RegisterDesktopPage(page);
   }
 
-static books(page: Page): BooksPage {
-  const width = page.viewportSize()?.width ?? 0;
-  return width < 768 
-  ? new BooksMobilePage(page) 
-  : new BooksDesktopPage(page);
-}
+  static books(page: Page): BooksPage {
+    const width = page.viewportSize()?.width ?? 0;
+    return width < 768
+      ? new BooksMobilePage(page)
+      : new BooksDesktopPage(page);
+  }
 
-static bookDetail(page: Page): BookDetailPage {
-  return new BookDetailPage(page);
-}
+  static bookDetail(page: Page): BookDetailPage {
+    return new BookDetailPage(page);
+  }
 
-static profile(page: Page): ProfilePage {
-  return new ProfilePage(page);
-}
+  static profile(page: Page): ProfilePage {
+    return new ProfilePage(page);
+  }
 
-static practiceForm(page: Page): PracticeFormPage {
-  const width = page.viewportSize()?.width ?? 0;
-  return width < 768
-    ? new PracticeFormMobilePage(page)
-    : new PracticeFormDesktopPage(page);
-}
+  static practiceForm(page: Page): PracticeFormPage {
+    const width = page.viewportSize()?.width ?? 0;
+    return width < 768
+      ? new PracticeFormMobilePage(page)
+      : new PracticeFormDesktopPage(page);
+  }
 
-static browserWindows(page: Page): BrowserWindowsPage {
-  const width = page.viewportSize()?.width ?? 0;
-  return width < 768
-    ? new BrowserWindowsMobilePage(page)
-    : new BrowserWindowsDesktopPage(page);
-}
+  static browserWindows(page: Page): BrowserWindowsPage {
+    const width = page.viewportSize()?.width ?? 0;
+    return width < 768
+      ? new BrowserWindowsMobilePage(page)
+      : new BrowserWindowsDesktopPage(page);
+  }
 
-static frames(page: Page): FramesPage {
-  const width = page.viewportSize()?.width ?? 0;
-  return width < 768
-    ? new FramesMobilePage(page)
-    : new FramesDesktopPage(page);
-}
+  static frames(page: Page): FramesPage {
+    const width = page.viewportSize()?.width ?? 0;
+    return width < 768
+      ? new FramesMobilePage(page)
+      : new FramesDesktopPage(page);
+  }
 
-static nestedFrames(page: Page): NestedFramesPage {
-  const width = page.viewportSize()?.width ?? 0;
-  return width < 768
-    ? new NestedFramesMobilePage(page)
-    : new NestedFramesDesktopPage(page);
-}
+  static nestedFrames(page: Page): NestedFramesPage {
+    const width = page.viewportSize()?.width ?? 0;
+    return width < 768
+      ? new NestedFramesMobilePage(page)
+      : new NestedFramesDesktopPage(page);
+  }
 }
