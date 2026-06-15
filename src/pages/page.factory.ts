@@ -22,6 +22,18 @@ import { FramesMobilePage } from './frames/frames.mobile';
 import { NestedFramesPage } from './nested-frames/nested-frames.page';
 import { NestedFramesDesktopPage } from './nested-frames/nested-frames.desktop';
 import { NestedFramesMobilePage } from './nested-frames/nested-frames.mobile';
+import { ModalDialogsPage } from './modal-dialogs/modal-dialogs.page';
+import { ModalDialogsDesktopPage } from './modal-dialogs/modal-dialogs.desktop';
+import { ModalDialogsMobilePage } from './modal-dialogs/modal-dialogs.mobile';
+import { TextBoxPage } from './elements/text-box.page';
+import { CheckBoxPage } from './elements/check-box.page';
+import { RadioButtonPage } from './elements/radio-button.page';
+import { WebTablesPage } from './elements/web-tables.page';
+import { ButtonsPage } from './elements/buttons.page';
+import { LinksPage } from './elements/links.page';
+import { BrokenLinksImagesPage } from './elements/broken-links-images.page';
+import { UploadDownloadPage } from './elements/upload-download.page';
+import { DynamicPropertiesPage } from './elements/dynamic-properties.page';
 
 export class PageFactory {
   static login(page: Page): LoginPage {
@@ -79,5 +91,48 @@ export class PageFactory {
     return width < 768
       ? new NestedFramesMobilePage(page)
       : new NestedFramesDesktopPage(page);
+  }
+
+  static modalDialogs(page: Page): ModalDialogsPage {
+    const width = page.viewportSize()?.width ?? 0;
+    return width < 768
+      ? new ModalDialogsMobilePage(page)
+      : new ModalDialogsDesktopPage(page);
+  }
+
+  static textBox(page: Page): TextBoxPage {
+    return new TextBoxPage(page);
+  }
+
+  static checkBox(page: Page): CheckBoxPage {
+    return new CheckBoxPage(page);
+  }
+
+  static radioButton(page: Page): RadioButtonPage {
+    return new RadioButtonPage(page);
+  }
+
+  static webTables(page: Page): WebTablesPage {
+    return new WebTablesPage(page);
+  }
+
+  static buttons(page: Page): ButtonsPage {
+    return new ButtonsPage(page);
+  }
+
+  static links(page: Page): LinksPage {
+    return new LinksPage(page);
+  }
+
+  static brokenLinksImages(page: Page): BrokenLinksImagesPage {
+    return new BrokenLinksImagesPage(page);
+  }
+
+  static uploadDownload(page: Page): UploadDownloadPage {
+    return new UploadDownloadPage(page);
+  }
+
+  static dynamicProperties(page: Page): DynamicPropertiesPage {
+    return new DynamicPropertiesPage(page);
   }
 }

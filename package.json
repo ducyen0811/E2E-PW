@@ -10,6 +10,8 @@
     "test:bookstore": "cross-env NO_REPORT=true cucumber-js --tags \"@bookstore\"",
     "test:forms": "cross-env NO_REPORT=true cucumber-js --tags \"@forms\"",
     "test:frames": "cross-env NO_REPORT=true cucumber-js --tags \"@frames\"",
+    "test:elements": "cross-env NO_REPORT=true cucumber-js --tags \"@elements\"",
+    "test:modal-dialogs": "cross-env NO_REPORT=true cucumber-js --tags \"@modal-dialogs\"",
     "test:auth:report": "cucumber-js --tags \"@auth\"",
     "test:bookstore:report": "cucumber-js --tags \"@bookstore\"",
     "test:forms:report": "cucumber-js --tags \"@forms\"",

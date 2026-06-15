@@ -51,9 +51,19 @@ E2E-PW/
 |   |-- features/
 |   |   |-- auth.feature
 |   |   |-- bookstore.feature
+|   |   |-- broken-links-images.feature
 |   |   |-- browser-windows.feature
+|   |   |-- buttons.feature
+|   |   |-- check-box.feature
+|   |   |-- dynamic-properties.feature
 |   |   |-- forms.feature
-|   |   `-- frames.feature
+|   |   |-- frames.feature
+|   |   |-- links.feature
+|   |   |-- modal-dialogs.feature
+|   |   |-- radio-button.feature
+|   |   |-- text-box.feature
+|   |   |-- upload-download.feature
+|   |   `-- web-tables.feature
 |   |-- hooks/
 |   |   |-- before.ts
 |   |   |-- after.ts
@@ -62,9 +72,11 @@ E2E-PW/
 |   |   |-- page.factory.ts
 |   |   |-- bookstore/
 |   |   |-- browser-windows/
+|   |   |-- elements/
 |   |   |-- forms/
 |   |   |-- frames/
 |   |   |-- login/
+|   |   |-- modal-dialogs/
 |   |   |-- nested-frames/
 |   |   `-- register/
 |   |-- steps/
@@ -93,8 +105,10 @@ npm run test
 # Run feature groups without report output
 npm run test:auth
 npm run test:bookstore
+npm run test:elements
 npm run test:forms
 npm run test:frames
+npm run test:modal-dialogs
 
 # Run by device
 npm run test:desktop
@@ -109,7 +123,9 @@ Run Cucumber directly:
 ```bash
 npx cucumber-js --tags "@auth"
 npx cucumber-js --tags "@smoke"
+npx cucumber-js --tags "@elements"
 npx cucumber-js --tags "@browser-windows"
+npx cucumber-js --tags "@modal-dialogs"
 npx cucumber-js --tags "@nested-frames"
 npx cucumber-js --tags "not @negative"
 ```
@@ -132,10 +148,21 @@ npx.cmd tsc --noEmit
 | `@register` | Register scenarios |
 | `@negative` | Negative validation scenarios |
 | `@bookstore` | Bookstore scenarios |
+| `@elements` | Elements scenarios |
+| `@text-box` | Text Box scenario |
+| `@check-box` | Check Box scenario |
+| `@radio-button` | Radio Button scenario |
+| `@web-tables` | Web Tables scenario |
+| `@buttons` | Buttons scenario |
+| `@links` | Links scenario |
+| `@broken-links-images` | Broken Links - Images scenario |
+| `@upload-download` | Upload and Download scenario |
+| `@dynamic-properties` | Dynamic Properties scenario |
 | `@forms` | Practice form scenarios |
 | `@browser-windows` | New tab/window scenarios |
 | `@frames` | Frames and nested frames scenarios |
 | `@nested-frames` | Nested frames scenario |
+| `@modal-dialogs` | Modal Dialogs scenarios |
 | `@single` | Sequential test grouping if used |
 | `@parallel` | Parallel-safe test grouping if used |
 
