@@ -1,7 +1,7 @@
 import { Given, When, Then } from '@cucumber/cucumber';
 import { PageFactory } from '../pages/page.factory';
-import type { TextBoxData } from '../pages/elements/text-box.page';
-import type { WebTableRecord } from '../pages/elements/web-tables.page';
+import type { TextBoxData } from '../pages/elements/text-box/text-box.page';
+import type { WebTableRecord } from '../pages/elements/web-tables/web-tables.page';
 
 const textBoxData: TextBoxData = {
   fullName: 'Demo QA User',

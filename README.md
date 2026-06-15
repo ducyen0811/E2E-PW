@@ -50,6 +50,7 @@ E2E-PW/
 |   |   `-- env.ts
 |   |-- features/
 |   |   |-- auth.feature
+|   |   |-- alerts.feature
 |   |   |-- bookstore.feature
 |   |   |-- broken-links-images.feature
 |   |   |-- browser-windows.feature
@@ -60,6 +61,7 @@ E2E-PW/
 |   |   |-- frames.feature
 |   |   |-- links.feature
 |   |   |-- modal-dialogs.feature
+|   |   |-- nested-frames.feature
 |   |   |-- radio-button.feature
 |   |   |-- text-box.feature
 |   |   |-- upload-download.feature
@@ -70,14 +72,20 @@ E2E-PW/
 |   |   `-- afterStep.ts
 |   |-- pages/
 |   |   |-- page.factory.ts
+|   |   |-- alerts-frame-windows/
+|   |   |   |-- alerts/
+|   |   |   |-- browser-windows/
+|   |   |   |-- frames/
+|   |   |   |-- modal-dialogs/
+|   |   |   `-- nested-frames/
 |   |   |-- bookstore/
-|   |   |-- browser-windows/
 |   |   |-- elements/
+|   |   |   |-- buttons/
+|   |   |   |-- check-box/
+|   |   |   |-- text-box/
+|   |   |   `-- ...
 |   |   |-- forms/
-|   |   |-- frames/
 |   |   |-- login/
-|   |   |-- modal-dialogs/
-|   |   |-- nested-frames/
 |   |   `-- register/
 |   |-- steps/
 |   |   |-- auth.step.ts
@@ -105,9 +113,12 @@ npm run test
 # Run feature groups without report output
 npm run test:auth
 npm run test:bookstore
+npm run test:alerts
+npm run test:alerts-frame-windows
 npm run test:elements
 npm run test:forms
 npm run test:frames
+npm run test:nested-frames
 npm run test:modal-dialogs
 
 # Run by device
@@ -123,6 +134,8 @@ Run Cucumber directly:
 ```bash
 npx cucumber-js --tags "@auth"
 npx cucumber-js --tags "@smoke"
+npx cucumber-js --tags "@alerts-frame-windows"
+npx cucumber-js --tags "@alerts"
 npx cucumber-js --tags "@elements"
 npx cucumber-js --tags "@browser-windows"
 npx cucumber-js --tags "@modal-dialogs"
@@ -148,6 +161,8 @@ npx.cmd tsc --noEmit
 | `@register` | Register scenarios |
 | `@negative` | Negative validation scenarios |
 | `@bookstore` | Bookstore scenarios |
+| `@alerts-frame-windows` | Alerts, Frame & Windows scenarios |
+| `@alerts` | JavaScript alert scenarios |
 | `@elements` | Elements scenarios |
 | `@text-box` | Text Box scenario |
 | `@check-box` | Check Box scenario |

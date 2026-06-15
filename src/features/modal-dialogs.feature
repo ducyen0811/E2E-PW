@@ -1,6 +1,6 @@
 Feature: Modal dialogs
 
-  @smoke @modal-dialogs
+  @smoke @alerts-frame-windows @modal-dialogs
   Scenario: Open and close the small modal dialog
     Given the user is on the Modal Dialogs page
     When the user opens the small modal dialog
@@ -8,7 +8,7 @@ Feature: Modal dialogs
     When the user closes the modal dialog
     Then the Modal Dialogs page remains visible
 
-  @smoke @modal-dialogs
+  @smoke @alerts-frame-windows @modal-dialogs
   Scenario: Open and close the large modal dialog
     Given the user is on the Modal Dialogs page
     When the user opens the large modal dialog
