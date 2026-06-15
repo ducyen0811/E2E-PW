@@ -88,11 +88,14 @@ E2E-PW/
 |   |   |-- login/
 |   |   `-- register/
 |   |-- steps/
+|   |   |-- alerts.step.ts
 |   |   |-- auth.step.ts
 |   |   |-- bookstore.step.ts
 |   |   |-- browser-windows.step.ts
+|   |   |-- elements.step.ts
 |   |   |-- forms.step.ts
-|   |   `-- frames.step.ts
+|   |   |-- frames.step.ts
+|   |   `-- modal-dialogs.step.ts
 |   |-- test-data/
 |   |-- utils/
 |   `-- world/
@@ -175,7 +178,7 @@ npx.cmd tsc --noEmit
 | `@dynamic-properties` | Dynamic Properties scenario |
 | `@forms` | Practice form scenarios |
 | `@browser-windows` | New tab/window scenarios |
-| `@frames` | Frames and nested frames scenarios |
+| `@frames` | Frames scenarios |
 | `@nested-frames` | Nested frames scenario |
 | `@modal-dialogs` | Modal Dialogs scenarios |
 | `@single` | Sequential test grouping if used |
@@ -186,9 +189,9 @@ npx.cmd tsc --noEmit
 Feature files live in `src/features/`:
 
 ```gherkin
-Feature: Frames
+Feature: Nested Frames
 
-  @frames @nested-frames
+  @smoke @alerts-frame-windows @nested-frames
   Scenario: Verify content inside nested frames
     Given the user is on the Nested Frames page
     Then the parent and child nested frames display their text
@@ -222,6 +225,12 @@ When a page has different desktop/mobile behavior, add:
 - `<feature>.desktop.ts` for desktop-specific behavior
 - `<feature>.mobile.ts` for mobile-specific behavior
 - a factory method in `src/pages/page.factory.ts`
+
+Grouped DemoQA sections should keep page folders under their section folder, for example:
+
+- `src/pages/elements/text-box/`
+- `src/pages/alerts-frame-windows/alerts/`
+- `src/pages/alerts-frame-windows/modal-dialogs/`
 
 ## Reports
 
