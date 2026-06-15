@@ -1,7 +1,7 @@
 {
-  "name": "plwr-typescr-core",
+  "name": "e2e-playwright-automation-framework",
   "version": "1.0.0",
-  "description": "Playwright, Cucumber, and TypeScript E2E automation project for DemoQA.",
+  "description": "E2E Playwright Automation Framework for DemoQA using Playwright, Cucumber, TypeScript, and Page Object Model.",
   "main": "index.js",
   "scripts": {
     "clean": "rimraf reports/screenshots reports/json reports/html reports/cucumber.html",

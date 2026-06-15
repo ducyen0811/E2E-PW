@@ -1,8 +1,8 @@
-# Ke Hoach Kiem Thu
+# Ke Hoach Kiem Thu - E2E Playwright Automation Framework
 
 ## 1. Muc tieu
 
-Xay dung va duy tri bo test end-to-end cho website DemoQA bang Playwright, Cucumber va TypeScript.
+Xay dung va duy tri E2E Playwright Automation Framework cho website DemoQA bang Playwright, Cucumber va TypeScript.
 
 Muc tieu chinh:
 
@@ -45,7 +45,8 @@ Muc tieu chinh:
 | Desktop viewport | 1440 x 900 |
 | Mobile profile | iPhone 14 |
 | Test framework | Playwright + Cucumber + TypeScript |
-| Kieu test | BDD voi Vietnamese Gherkin |
+| Project name | E2E Playwright Automation Framework |
+| Kieu test | BDD voi English Gherkin |
 | Cau hinh local | `.env` |
 | Report output | `reports/json`, `reports/html`, `reports/screenshots` |
 | Environment | Local |
@@ -89,6 +90,8 @@ Muc tieu chinh:
 | `@bookstore` | Scenario bookstore |
 | `@forms` | Scenario practice form |
 | `@browser-windows` | Scenario tab/window moi |
+| `@frames` | Scenario frames va nested frames |
+| `@nested-frames` | Scenario nested frames |
 | `@single` | Test nen chay tuan tu |
 | `@parallel` | Test co the chay song song |
 
@@ -152,6 +155,14 @@ Dung phan nay lam roadmap cho `docs/Manual_Test_Cases.xlsx` va automation sau na
 | WIN-002 | High | Mo window moi va kiem tra heading cua sample page | Da automation |
 | WIN-003 | High | Mo message window va kiem tra message text | Da automation |
 | WIN-004 | Medium | Trang Browser Windows van dung duoc sau khi popup dong | Da automation |
+
+### Frames
+
+| ID | Priority | Scenario | Trang thai |
+|----|----------|----------|------------|
+| FRAME-001 | High | Kiem tra content trong ca hai frame | Da automation |
+| FRAME-002 | Medium | Kiem tra frame lon va frame nho co kich thuoc dung | Da automation |
+| FRAME-003 | High | Kiem tra content trong nested parent/child frames | Da automation |
 
 ### Framework/Infrastructure
 

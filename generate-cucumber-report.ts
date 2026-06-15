@@ -20,7 +20,7 @@ reporter.generate({
   ignoreBadJsonFile: true,
   customCss: path.resolve("custom.css"),               // 👈 important (empty files)
   metadata: {
-    "Framework": "Playwright + Cucumber",
+    "Framework": "E2E Playwright Automation Framework",
     "Platform": process.platform,
     "Node Version": process.version,
     "Execution": "Automation"
