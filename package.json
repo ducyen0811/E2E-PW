@@ -8,6 +8,7 @@
     "test": "npm run clean && cucumber-js",
     "test:auth": "cross-env NO_REPORT=true cucumber-js --tags \"@auth\"",
     "test:bookstore": "cross-env NO_REPORT=true cucumber-js --tags \"@bookstore\"",
+    "test:book-store-application": "cross-env NO_REPORT=true cucumber-js --tags \"@book-store-application\"",
     "test:forms": "cross-env NO_REPORT=true cucumber-js --tags \"@forms\"",
     "test:frames": "cross-env NO_REPORT=true cucumber-js --tags \"@frames\"",
     "test:alerts": "cross-env NO_REPORT=true cucumber-js --tags \"@alerts\"",

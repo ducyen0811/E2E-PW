@@ -78,15 +78,18 @@ E2E-PW/
 |   |   |   |-- frames/
 |   |   |   |-- modal-dialogs/
 |   |   |   `-- nested-frames/
-|   |   |-- bookstore/
+|   |   |-- book-store-application/
+|   |   |   |-- bookstore/
+|   |   |   |-- login/
+|   |   |   |-- profile/
+|   |   |   `-- register/
 |   |   |-- elements/
 |   |   |   |-- buttons/
 |   |   |   |-- check-box/
 |   |   |   |-- text-box/
 |   |   |   `-- ...
 |   |   |-- forms/
-|   |   |-- login/
-|   |   `-- register/
+|   |   `-- ...
 |   |-- steps/
 |   |   |-- alerts.step.ts
 |   |   |-- auth.step.ts
@@ -116,6 +119,7 @@ npm run test
 # Run feature groups without report output
 npm run test:auth
 npm run test:bookstore
+npm run test:book-store-application
 npm run test:alerts
 npm run test:alerts-frame-windows
 npm run test:elements
@@ -137,6 +141,7 @@ Run Cucumber directly:
 ```bash
 npx cucumber-js --tags "@auth"
 npx cucumber-js --tags "@smoke"
+npx cucumber-js --tags "@book-store-application"
 npx cucumber-js --tags "@alerts-frame-windows"
 npx cucumber-js --tags "@alerts"
 npx cucumber-js --tags "@elements"
@@ -163,6 +168,7 @@ npx.cmd tsc --noEmit
 | `@logout` | Logout scenario |
 | `@register` | Register scenarios |
 | `@negative` | Negative validation scenarios |
+| `@book-store-application` | Book Store Application scenarios |
 | `@bookstore` | Bookstore scenarios |
 | `@alerts-frame-windows` | Alerts, Frame & Windows scenarios |
 | `@alerts` | JavaScript alert scenarios |
@@ -231,6 +237,8 @@ Grouped DemoQA sections should keep page folders under their section folder, for
 - `src/pages/elements/text-box/`
 - `src/pages/alerts-frame-windows/alerts/`
 - `src/pages/alerts-frame-windows/modal-dialogs/`
+- `src/pages/book-store-application/login/`
+- `src/pages/book-store-application/profile/`
 
 ## Reports
 
