@@ -13,11 +13,13 @@ const responseLinks = [
 export class LinksPage {
   private readonly title: Locator;
   private readonly homeLink: Locator;
+  private readonly dynamicHomeLink: Locator;
   private readonly responseMessage: Locator;
 
   constructor(private readonly page: Page) {
     this.title = page.locator('h1');
     this.homeLink = page.locator('#simpleLink');
+    this.dynamicHomeLink = page.locator('#dynamicLink');
     this.responseMessage = page.locator('#linkResponse');
   }
 
@@ -33,6 +35,16 @@ export class LinksPage {
   async openHomeLinkAndExpectHomePage(): Promise<void> {
     const popupPromise = this.page.waitForEvent('popup');
     await this.homeLink.click();
+    const popup = await popupPromise;
+
+    await popup.waitForLoadState('domcontentloaded');
+    await expect(popup).toHaveURL(/demoqa\.com\/?$/);
+    await popup.close();
+  }
+
+  async openDynamicHomeLinkAndExpectHomePage(): Promise<void> {
+    const popupPromise = this.page.waitForEvent('popup');
+    await this.dynamicHomeLink.click();
     const popup = await popupPromise;
 
     await popup.waitForLoadState('domcontentloaded');

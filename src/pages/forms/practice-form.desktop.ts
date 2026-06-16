@@ -27,6 +27,18 @@ export class PracticeFormDesktopPage extends PracticeFormPage {
     await this.page.locator('#submit').click({ force: true });
   }
 
+  async submitEmptyForm(): Promise<void> {
+    await this.submitForm();
+  }
+
+  async submitWithShortMobileNumber(): Promise<void> {
+    await this.page.locator('#firstName').fill('Short');
+    await this.page.locator('#lastName').fill('Mobile');
+    await this.page.locator(`label[for="${genderLabelByValue.Male}"]`).click();
+    await this.page.locator('#userNumber').fill('12345');
+    await this.submitForm();
+  }
+
   async expectSubmittedData(data: PracticeFormData): Promise<void> {
     await expect(this.page.locator('#example-modal-sizes-title-lg')).toHaveText('Thanks for submitting the form');
 
@@ -35,5 +47,18 @@ export class PracticeFormDesktopPage extends PracticeFormPage {
     await expect(modal).toContainText(data.email);
     await expect(modal).toContainText(data.gender);
     await expect(modal).toContainText(data.mobile);
+  }
+
+  async expectRequiredFieldValidation(): Promise<void> {
+    await expect(this.page.locator('.modal-content')).toBeHidden();
+    const invalidFields = await this.page.locator('#firstName, #lastName, #userNumber').evaluateAll(
+      (inputs) => inputs.filter((input) => !(input as HTMLInputElement).checkValidity()).length
+    );
+    expect(invalidFields).toBeGreaterThan(0);
+  }
+
+  private async submitForm(): Promise<void> {
+    await this.page.locator('#submit').scrollIntoViewIfNeeded();
+    await this.page.locator('#submit').click({ force: true });
   }
 }

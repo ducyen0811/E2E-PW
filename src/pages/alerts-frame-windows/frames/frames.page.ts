@@ -25,6 +25,11 @@ export class FramesPage {
     await expect(this.secondFrame).toBeVisible();
   }
 
+  async reload(): Promise<void> {
+    await this.page.reload({ waitUntil: 'domcontentloaded' });
+    await this.expectLoaded();
+  }
+
   async expectBothFramesDisplaySampleHeading(): Promise<void> {
     await expect(this.sampleHeadingIn(this.firstFrameContent)).toHaveText('This is a sample page');
     await expect(this.sampleHeadingIn(this.secondFrameContent)).toHaveText('This is a sample page');

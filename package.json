@@ -15,6 +15,7 @@
     "test:alerts-frame-windows": "cross-env NO_REPORT=true cucumber-js --tags \"@alerts-frame-windows\"",
     "test:nested-frames": "cross-env NO_REPORT=true cucumber-js --tags \"@nested-frames\"",
     "test:elements": "cross-env NO_REPORT=true cucumber-js --tags \"@elements\"",
+    "test:widgets": "cross-env NO_REPORT=true cucumber-js --tags \"@widgets\"",
     "test:modal-dialogs": "cross-env NO_REPORT=true cucumber-js --tags \"@modal-dialogs\"",
     "test:auth:report": "cucumber-js --tags \"@auth\"",
     "test:bookstore:report": "cucumber-js --tags \"@bookstore\"",

@@ -11,6 +11,24 @@ Feature: User authentication
     Then the login error message is displayed
     And the user remains on the login page
 
+  @book-store-application @auth @login @negative @boundary
+  Scenario: Fail to log in with a 100-character password
+    When the user logs in with a 100-character password
+    Then the login error message is displayed
+    And the user remains on the login page
+
+  @book-store-application @auth @login @negative @edge-case
+  Scenario: Fail to log in with a username padded by spaces
+    When the user logs in with a username padded by spaces
+    Then the login error message is displayed
+    And the user remains on the login page
+
+  @book-store-application @auth @login @negative @security
+  Scenario: Fail to log in with injection-like credentials
+    When the user logs in with injection-like credentials
+    Then the login error message is displayed
+    And the user remains on the login page
+
   @book-store-application @auth @login @negative
   Scenario: Fail to log in with an empty username
     When the user logs in with an empty username

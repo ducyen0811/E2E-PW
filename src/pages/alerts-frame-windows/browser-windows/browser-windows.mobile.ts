@@ -45,6 +45,12 @@ export class BrowserWindowsMobilePage extends BrowserWindowsPage {
     await popup.close();
   }
 
+  async openTwoNewTabsAndExpectSamplePages(): Promise<void> {
+    await this.openNewTabAndExpectSamplePage();
+    await this.openNewTabAndExpectSamplePage();
+    expect(this.page.context().pages().filter((page) => !page.isClosed())).toHaveLength(1);
+  }
+
   private async expectSamplePage(popup: Page): Promise<void> {
     await popup.waitForLoadState('domcontentloaded');
     await expect(popup.locator('#sampleHeading')).toHaveText('This is a sample page');

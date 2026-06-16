@@ -28,9 +28,17 @@ export class ButtonsPage {
     await this.dynamicClickButton.click();
   }
 
+  async singleClickDoubleClickButton(): Promise<void> {
+    await this.doubleClickButton.click();
+  }
+
   async expectAllClickMessages(): Promise<void> {
     await expect(this.page.locator('#doubleClickMessage')).toHaveText('You have done a double click');
     await expect(this.page.locator('#rightClickMessage')).toHaveText('You have done a right click');
     await expect(this.page.locator('#dynamicClickMessage')).toHaveText('You have done a dynamic click');
+  }
+
+  async expectDoubleClickMessageHidden(): Promise<void> {
+    await expect(this.page.locator('#doubleClickMessage')).toBeHidden();
   }
 }

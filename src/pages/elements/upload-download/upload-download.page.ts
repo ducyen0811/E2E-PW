@@ -1,6 +1,7 @@
 import { expect, Locator, Page } from '@playwright/test';
 
 const uploadedFileName = 'elements-upload.txt';
+const complexUploadedFileName = 'manual qa edge-case !@# 100.txt';
 
 export class UploadDownloadPage {
   private readonly title: Locator;
@@ -40,7 +41,19 @@ export class UploadDownloadPage {
     });
   }
 
+  async uploadComplexNamedFile(): Promise<void> {
+    await this.uploadInput.setInputFiles({
+      name: complexUploadedFileName,
+      mimeType: 'text/plain',
+      buffer: Buffer.from('Complex file name upload test')
+    });
+  }
+
   async expectUploadedFilePath(): Promise<void> {
     await expect(this.uploadedFilePath).toContainText(uploadedFileName);
+  }
+
+  async expectComplexUploadedFilePath(): Promise<void> {
+    await expect(this.uploadedFilePath).toContainText(complexUploadedFileName);
   }
 }

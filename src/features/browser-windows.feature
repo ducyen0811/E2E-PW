@@ -17,3 +17,9 @@ Feature: Browser windows
     Given the user is on the Browser Windows page
     When the user opens a new message window from the Browser Windows page
     Then the Browser Windows page remains visible
+
+  @alerts-frame-windows @browser-windows @state
+  Scenario: Open multiple new tabs without leaving the original page
+    Given the user is on the Browser Windows page
+    When the user opens two new tabs from the Browser Windows page
+    Then the Browser Windows page remains visible

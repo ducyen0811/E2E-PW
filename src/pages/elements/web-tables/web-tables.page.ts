@@ -51,8 +51,23 @@ export class WebTablesPage {
     await row.locator('[title="Delete"]').click();
   }
 
+  async tryAddInvalidEmailRecord(record: WebTableRecord): Promise<void> {
+    await this.addButton.click();
+    await this.fillRegistrationForm(record);
+    await this.submitButton.click();
+    await expect(this.modal).toBeVisible();
+  }
+
   async expectRecordRemoved(email: string): Promise<void> {
     await expect(this.rowByEmail(email)).toHaveCount(0);
+  }
+
+  async expectInvalidRecordNotAdded(email: string): Promise<void> {
+    await expect(this.rowByEmail(email)).toHaveCount(0);
+    const emailValid = await this.page.locator('#userEmail').evaluate(
+      (input) => (input as HTMLInputElement).checkValidity()
+    );
+    expect(emailValid).toBeFalsy();
   }
 
   private async fillRegistrationForm(record: WebTableRecord): Promise<void> {

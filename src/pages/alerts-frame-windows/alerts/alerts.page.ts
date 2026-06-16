@@ -50,6 +50,12 @@ export class AlertsPage {
     await expect(this.confirmResult).toHaveText('You selected Ok');
   }
 
+  async dismissConfirmAlert(): Promise<void> {
+    const message = await this.dismissDialogFromClick(this.confirmAlertButton);
+    expect(message).toBe('Do you confirm action?');
+    await expect(this.confirmResult).toHaveText('You selected Cancel');
+  }
+
   async submitPromptAlert(promptText: string): Promise<void> {
     const message = await this.acceptDialogFromClick(this.promptAlertButton, promptText);
     expect(message).toBe('Please enter your name');
@@ -61,11 +67,32 @@ export class AlertsPage {
     await expect(this.promptResult).toHaveText(`You entered ${promptText}`);
   }
 
+  async expectConfirmDismissed(): Promise<void> {
+    await expect(this.confirmResult).toHaveText('You selected Cancel');
+  }
+
+  async expectPromptResult(promptText: string): Promise<void> {
+    await expect(this.promptResult).toHaveText(`You entered ${promptText}`);
+  }
+
   private async acceptDialogFromClick(button: Locator, promptText?: string): Promise<string> {
     const messagePromise = new Promise<string>((resolve) => {
       this.page.once('dialog', async (dialog) => {
         const message = dialog.message();
         await dialog.accept(promptText);
+        resolve(message);
+      });
+    });
+
+    await button.click();
+    return messagePromise;
+  }
+
+  private async dismissDialogFromClick(button: Locator): Promise<string> {
+    const messagePromise = new Promise<string>((resolve) => {
+      this.page.once('dialog', async (dialog) => {
+        const message = dialog.message();
+        await dialog.dismiss();
         resolve(message);
       });
     });

@@ -4,4 +4,5 @@ export abstract class BrowserWindowsPage {
   abstract openNewTabAndExpectSamplePage(): Promise<void>;
   abstract openNewWindowAndExpectSamplePage(): Promise<void>;
   abstract openNewMessageWindowAndExpectMessage(): Promise<void>;
+  abstract openTwoNewTabsAndExpectSamplePages(): Promise<void>;
 }

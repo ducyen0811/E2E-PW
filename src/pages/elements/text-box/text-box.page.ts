@@ -51,4 +51,9 @@ export class TextBoxPage {
     await expect(this.output).toContainText(`Current Address :${data.currentAddress}`);
     await expect(this.output).toContainText(`Permananet Address :${data.permanentAddress}`);
   }
+
+  async expectEmailValidationError(): Promise<void> {
+    await expect(this.output).toBeHidden();
+    await expect(this.emailInput).toHaveClass(/field-error/);
+  }
 }

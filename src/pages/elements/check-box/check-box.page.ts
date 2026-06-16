@@ -24,8 +24,17 @@ export class CheckBoxPage {
     await this.homeCheckbox.click();
   }
 
+  async clearHome(): Promise<void> {
+    await this.homeCheckbox.click();
+  }
+
   async expectHomeSelected(): Promise<void> {
     await expect(this.result).toBeVisible();
     await expect(this.result).toContainText('home');
+  }
+
+  async expectNoResultsDisplayed(): Promise<void> {
+    await expect(this.result).toBeHidden();
+    await expect(this.homeCheckbox).toHaveAttribute('aria-checked', 'false');
   }
 }

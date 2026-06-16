@@ -18,6 +18,12 @@ async function loginWithValidCredentials(world: any): Promise<void> {
   await loginPage.login(account.username, account.password);
 }
 
+async function loginWithCredentials(world: any, username: string, password: string): Promise<void> {
+  const loginPage = PageFactory.login(world.page);
+  await loginPage.open();
+  await loginPage.login(username, password);
+}
+
 When('the user logs in', async function () {
   await loginWithValidCredentials(this);
 });
@@ -28,23 +34,31 @@ When('the user logs in with valid credentials', async function () {
 
 When('the user logs in with an invalid password', async function () {
   const account = await ensureFreshAccount(this);
-  const loginPage = PageFactory.login(this.page);
-  await loginPage.open();
-  await loginPage.login(account.username, `${account.password}_invalid`);
+  await loginWithCredentials(this, account.username, `${account.password}_invalid`);
+});
+
+When('the user logs in with a 100-character password', async function () {
+  const account = await ensureFreshAccount(this);
+  await loginWithCredentials(this, account.username, 'A'.repeat(100));
+});
+
+When('the user logs in with a username padded by spaces', async function () {
+  const account = await ensureFreshAccount(this);
+  await loginWithCredentials(this, `  ${account.username}  `, account.password);
+});
+
+When('the user logs in with injection-like credentials', async function () {
+  await loginWithCredentials(this, "' OR '1'='1", "' OR '1'='1; DROP TABLE users; --");
 });
 
 When('the user logs in with an empty username', async function () {
   const account = await ensureFreshAccount(this);
-  const loginPage = PageFactory.login(this.page);
-  await loginPage.open();
-  await loginPage.login('', account.password);
+  await loginWithCredentials(this, '', account.password);
 });
 
 When('the user logs in with an empty password', async function () {
   const account = await ensureFreshAccount(this);
-  const loginPage = PageFactory.login(this.page);
-  await loginPage.open();
-  await loginPage.login(account.username, '');
+  await loginWithCredentials(this, account.username, '');
 });
 
 When('the user logs out', async function () {

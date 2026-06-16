@@ -5,6 +5,11 @@ Feature: Bookstore
     When the user searches books with keyword "Git"
     Then the search results should contain "Git"
 
+  @book-store-application @bookstore @negative
+  Scenario: Search books with a keyword that has no matches
+    When the user searches books with keyword "zzzz-no-book-123"
+    Then no bookstore search results should be displayed
+
   @book-store-application @bookstore
   Scenario: Add a book to the collection
     When the user adds book "Git Pocket Guide" to the collection

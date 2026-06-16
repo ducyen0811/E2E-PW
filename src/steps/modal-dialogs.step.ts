@@ -22,6 +22,16 @@ When('the user closes the modal dialog', async function () {
   await modalDialogs.closeModal();
 });
 
+When('the user closes the modal dialog with the X button', async function () {
+  const modalDialogs = PageFactory.modalDialogs(this.page);
+  await modalDialogs.closeModalWithX();
+});
+
+When('the user closes the modal dialog with Escape', async function () {
+  const modalDialogs = PageFactory.modalDialogs(this.page);
+  await modalDialogs.closeModalWithEscape();
+});
+
 Then('the small modal dialog is displayed', async function () {
   const modalDialogs = PageFactory.modalDialogs(this.page);
   await modalDialogs.expectSmallModalDisplayed();

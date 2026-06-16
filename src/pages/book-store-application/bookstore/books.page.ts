@@ -28,6 +28,10 @@ export class BooksPage {
     await expect(this.bookLink(new RegExp(text, 'i')).first()).toBeVisible();
   }
 
+  async expectNoSearchResults(): Promise<void> {
+    await expect(this.page.locator('.rt-tbody a').first()).toBeHidden();
+  }
+
   private bookLink(name: string | RegExp): Locator {
     return this.page.getByRole('link', { name });
   }

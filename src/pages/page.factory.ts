@@ -55,6 +55,33 @@ import { UploadDownloadMobilePage } from './elements/upload-download/upload-down
 import { DynamicPropertiesPage } from './elements/dynamic-properties/dynamic-properties.page';
 import { DynamicPropertiesDesktopPage } from './elements/dynamic-properties/dynamic-properties.desktop';
 import { DynamicPropertiesMobilePage } from './elements/dynamic-properties/dynamic-properties.mobile';
+import { AccordianPage } from './widgets/accordian/accordian.page';
+import { AccordianDesktopPage } from './widgets/accordian/accordian.desktop';
+import { AccordianMobilePage } from './widgets/accordian/accordian.mobile';
+import { AutoCompletePage } from './widgets/auto-complete/auto-complete.page';
+import { AutoCompleteDesktopPage } from './widgets/auto-complete/auto-complete.desktop';
+import { AutoCompleteMobilePage } from './widgets/auto-complete/auto-complete.mobile';
+import { DatePickerPage } from './widgets/date-picker/date-picker.page';
+import { DatePickerDesktopPage } from './widgets/date-picker/date-picker.desktop';
+import { DatePickerMobilePage } from './widgets/date-picker/date-picker.mobile';
+import { SliderPage } from './widgets/slider/slider.page';
+import { SliderDesktopPage } from './widgets/slider/slider.desktop';
+import { SliderMobilePage } from './widgets/slider/slider.mobile';
+import { ProgressBarPage } from './widgets/progress-bar/progress-bar.page';
+import { ProgressBarDesktopPage } from './widgets/progress-bar/progress-bar.desktop';
+import { ProgressBarMobilePage } from './widgets/progress-bar/progress-bar.mobile';
+import { TabsPage } from './widgets/tabs/tabs.page';
+import { TabsDesktopPage } from './widgets/tabs/tabs.desktop';
+import { TabsMobilePage } from './widgets/tabs/tabs.mobile';
+import { ToolTipsPage } from './widgets/tool-tips/tool-tips.page';
+import { ToolTipsDesktopPage } from './widgets/tool-tips/tool-tips.desktop';
+import { ToolTipsMobilePage } from './widgets/tool-tips/tool-tips.mobile';
+import { MenuPage } from './widgets/menu/menu.page';
+import { MenuDesktopPage } from './widgets/menu/menu.desktop';
+import { MenuMobilePage } from './widgets/menu/menu.mobile';
+import { SelectMenuPage } from './widgets/select-menu/select-menu.page';
+import { SelectMenuDesktopPage } from './widgets/select-menu/select-menu.desktop';
+import { SelectMenuMobilePage } from './widgets/select-menu/select-menu.mobile';
 
 export class PageFactory {
   static login(page: Page): LoginPage {
@@ -189,5 +216,68 @@ export class PageFactory {
     return width < 768
       ? new DynamicPropertiesMobilePage(page)
       : new DynamicPropertiesDesktopPage(page);
+  }
+
+  static accordian(page: Page): AccordianPage {
+    const width = page.viewportSize()?.width ?? 0;
+    return width < 768
+      ? new AccordianMobilePage(page)
+      : new AccordianDesktopPage(page);
+  }
+
+  static autoComplete(page: Page): AutoCompletePage {
+    const width = page.viewportSize()?.width ?? 0;
+    return width < 768
+      ? new AutoCompleteMobilePage(page)
+      : new AutoCompleteDesktopPage(page);
+  }
+
+  static datePicker(page: Page): DatePickerPage {
+    const width = page.viewportSize()?.width ?? 0;
+    return width < 768
+      ? new DatePickerMobilePage(page)
+      : new DatePickerDesktopPage(page);
+  }
+
+  static slider(page: Page): SliderPage {
+    const width = page.viewportSize()?.width ?? 0;
+    return width < 768
+      ? new SliderMobilePage(page)
+      : new SliderDesktopPage(page);
+  }
+
+  static progressBar(page: Page): ProgressBarPage {
+    const width = page.viewportSize()?.width ?? 0;
+    return width < 768
+      ? new ProgressBarMobilePage(page)
+      : new ProgressBarDesktopPage(page);
+  }
+
+  static tabs(page: Page): TabsPage {
+    const width = page.viewportSize()?.width ?? 0;
+    return width < 768
+      ? new TabsMobilePage(page)
+      : new TabsDesktopPage(page);
+  }
+
+  static toolTips(page: Page): ToolTipsPage {
+    const width = page.viewportSize()?.width ?? 0;
+    return width < 768
+      ? new ToolTipsMobilePage(page)
+      : new ToolTipsDesktopPage(page);
+  }
+
+  static menu(page: Page): MenuPage {
+    const width = page.viewportSize()?.width ?? 0;
+    return width < 768
+      ? new MenuMobilePage(page)
+      : new MenuDesktopPage(page);
+  }
+
+  static selectMenu(page: Page): SelectMenuPage {
+    const width = page.viewportSize()?.width ?? 0;
+    return width < 768
+      ? new SelectMenuMobilePage(page)
+      : new SelectMenuDesktopPage(page);
   }
 }

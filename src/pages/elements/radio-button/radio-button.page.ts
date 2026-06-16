@@ -37,4 +37,10 @@ export class RadioButtonPage {
     await expect(this.result).toHaveText('Impressive');
     await expect(this.noInput).toBeDisabled();
   }
+
+  async expectDisabledOptionCannotBeSelected(): Promise<void> {
+    await expect(this.noInput).toBeDisabled();
+    await expect(this.noInput).not.toBeChecked();
+    await expect(this.result).toBeHidden();
+  }
 }

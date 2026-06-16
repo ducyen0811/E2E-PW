@@ -22,6 +22,11 @@ When('the user opens a new message window from the Browser Windows page', async 
   await browserWindows.openNewMessageWindowAndExpectMessage();
 });
 
+When('the user opens two new tabs from the Browser Windows page', async function () {
+  const browserWindows = PageFactory.browserWindows(this.page);
+  await browserWindows.openTwoNewTabsAndExpectSamplePages();
+});
+
 Then('the Browser Windows page remains visible', async function () {
   const browserWindows = PageFactory.browserWindows(this.page);
   await browserWindows.expectLoaded();

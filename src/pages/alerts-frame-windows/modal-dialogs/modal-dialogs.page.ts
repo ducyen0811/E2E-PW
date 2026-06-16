@@ -7,6 +7,8 @@ export class ModalDialogsPage {
   private readonly modalContent: Locator;
   private readonly smallModalTitle: Locator;
   private readonly largeModalTitle: Locator;
+  private readonly closeButton: Locator;
+  private readonly closeXButton: Locator;
 
   constructor(protected readonly page: Page) {
     this.title = page.locator('h1');
@@ -15,6 +17,8 @@ export class ModalDialogsPage {
     this.modalContent = page.locator('.modal-content');
     this.smallModalTitle = page.locator('#example-modal-sizes-title-sm');
     this.largeModalTitle = page.locator('#example-modal-sizes-title-lg');
+    this.closeButton = page.locator('.modal-footer').getByText('Close');
+    this.closeXButton = page.locator('.modal-header button');
   }
 
   async open(): Promise<void> {
@@ -49,7 +53,17 @@ export class ModalDialogsPage {
   }
 
   async closeModal(): Promise<void> {
-    await this.modalContent.getByText('Close').click();
+    await this.closeButton.click();
+    await expect(this.modalContent).toBeHidden();
+  }
+
+  async closeModalWithX(): Promise<void> {
+    await this.closeXButton.click();
+    await expect(this.modalContent).toBeHidden();
+  }
+
+  async closeModalWithEscape(): Promise<void> {
+    await this.page.keyboard.press('Escape');
     await expect(this.modalContent).toBeHidden();
   }
 }

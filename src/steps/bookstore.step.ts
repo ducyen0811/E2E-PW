@@ -43,6 +43,11 @@ Then('the search results should contain {string}', async function (text: string)
   await books.expectResultsContain(text);
 });
 
+Then('no bookstore search results should be displayed', async function () {
+  const books = PageFactory.books(this.page);
+  await books.expectNoSearchResults();
+});
+
 When('the user adds book {string} to the collection', async function (title: string) {
   await loginIfNeeded(this);
 

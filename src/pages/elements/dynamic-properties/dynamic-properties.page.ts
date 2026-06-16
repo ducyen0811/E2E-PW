@@ -28,4 +28,10 @@ export class DynamicPropertiesPage {
     await expect(this.colorChangeButton).toHaveClass(/text-danger/, { timeout: 7000 });
     await expect(this.visibleAfterButton).toBeVisible({ timeout: 7000 });
   }
+
+  async expectInitialStates(): Promise<void> {
+    await expect(this.enableAfterButton).toBeDisabled();
+    await expect(this.colorChangeButton).not.toHaveClass(/text-danger/);
+    await expect(this.visibleAfterButton).toBeHidden();
+  }
 }
