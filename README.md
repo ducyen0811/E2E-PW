@@ -49,6 +49,8 @@ E2E-PW/
 |   |   |-- driver.factory.ts
 |   |   `-- env.ts
 |   |-- features/
+|   |   |-- interactions/
+|   |   |-- widgets/
 |   |   |-- auth.feature
 |   |   |-- alerts.feature
 |   |   |-- bookstore.feature
@@ -89,6 +91,22 @@ E2E-PW/
 |   |   |   |-- text-box/
 |   |   |   `-- ...
 |   |   |-- forms/
+|   |   |-- interactions/
+|   |   |   |-- dragabble/
+|   |   |   |-- droppable/
+|   |   |   |-- resizable/
+|   |   |   |-- selectable/
+|   |   |   `-- sortable/
+|   |   |-- widgets/
+|   |   |   |-- accordian/
+|   |   |   |-- auto-complete/
+|   |   |   |-- date-picker/
+|   |   |   |-- menu/
+|   |   |   |-- progress-bar/
+|   |   |   |-- select-menu/
+|   |   |   |-- slider/
+|   |   |   |-- tabs/
+|   |   |   `-- tool-tips/
 |   |   `-- ...
 |   |-- steps/
 |   |   |-- alerts.step.ts
@@ -98,7 +116,9 @@ E2E-PW/
 |   |   |-- elements.step.ts
 |   |   |-- forms.step.ts
 |   |   |-- frames.step.ts
-|   |   `-- modal-dialogs.step.ts
+|   |   |-- interactions.step.ts
+|   |   |-- modal-dialogs.step.ts
+|   |   `-- widgets.step.ts
 |   |-- test-data/
 |   |-- utils/
 |   `-- world/
@@ -123,6 +143,8 @@ npm run test:book-store-application
 npm run test:alerts
 npm run test:alerts-frame-windows
 npm run test:elements
+npm run test:widgets
+npm run test:interactions
 npm run test:forms
 npm run test:frames
 npm run test:nested-frames
@@ -145,6 +167,8 @@ npx cucumber-js --tags "@book-store-application"
 npx cucumber-js --tags "@alerts-frame-windows"
 npx cucumber-js --tags "@alerts"
 npx cucumber-js --tags "@elements"
+npx cucumber-js --tags "@widgets"
+npx cucumber-js --tags "@interactions"
 npx cucumber-js --tags "@browser-windows"
 npx cucumber-js --tags "@modal-dialogs"
 npx cucumber-js --tags "@nested-frames"
@@ -183,6 +207,22 @@ npx.cmd tsc --noEmit
 | `@upload-download` | Upload and Download scenario |
 | `@dynamic-properties` | Dynamic Properties scenario |
 | `@forms` | Practice form scenarios |
+| `@widgets` | Widgets scenarios |
+| `@accordian` | Accordian widget scenario |
+| `@auto-complete` | Auto Complete widget scenario |
+| `@date-picker` | Date Picker widget scenario |
+| `@slider` | Slider widget scenario |
+| `@progress-bar` | Progress Bar widget scenario |
+| `@tabs` | Tabs widget scenario |
+| `@tool-tips` | Tool Tips widget scenario |
+| `@menu` | Menu widget scenario |
+| `@select-menu` | Select Menu widget scenario |
+| `@interactions` | Interactions scenarios |
+| `@sortable` | Sortable interaction scenario |
+| `@selectable` | Selectable interaction scenario |
+| `@resizable` | Resizable interaction scenario |
+| `@droppable` | Droppable interaction scenario |
+| `@dragabble` | Dragabble interaction scenario |
 | `@browser-windows` | New tab/window scenarios |
 | `@frames` | Frames scenarios |
 | `@nested-frames` | Nested frames scenario |
@@ -237,6 +277,8 @@ Grouped DemoQA sections should keep page folders under their section folder, for
 - `src/pages/elements/text-box/`
 - `src/pages/alerts-frame-windows/alerts/`
 - `src/pages/alerts-frame-windows/modal-dialogs/`
+- `src/pages/widgets/accordian/`
+- `src/pages/interactions/droppable/`
 - `src/pages/book-store-application/login/`
 - `src/pages/book-store-application/profile/`
 

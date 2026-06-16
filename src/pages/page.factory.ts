@@ -82,6 +82,21 @@ import { MenuMobilePage } from './widgets/menu/menu.mobile';
 import { SelectMenuPage } from './widgets/select-menu/select-menu.page';
 import { SelectMenuDesktopPage } from './widgets/select-menu/select-menu.desktop';
 import { SelectMenuMobilePage } from './widgets/select-menu/select-menu.mobile';
+import { SortablePage } from './interactions/sortable/sortable.page';
+import { SortableDesktopPage } from './interactions/sortable/sortable.desktop';
+import { SortableMobilePage } from './interactions/sortable/sortable.mobile';
+import { SelectablePage } from './interactions/selectable/selectable.page';
+import { SelectableDesktopPage } from './interactions/selectable/selectable.desktop';
+import { SelectableMobilePage } from './interactions/selectable/selectable.mobile';
+import { ResizablePage } from './interactions/resizable/resizable.page';
+import { ResizableDesktopPage } from './interactions/resizable/resizable.desktop';
+import { ResizableMobilePage } from './interactions/resizable/resizable.mobile';
+import { DroppablePage } from './interactions/droppable/droppable.page';
+import { DroppableDesktopPage } from './interactions/droppable/droppable.desktop';
+import { DroppableMobilePage } from './interactions/droppable/droppable.mobile';
+import { DragabblePage } from './interactions/dragabble/dragabble.page';
+import { DragabbleDesktopPage } from './interactions/dragabble/dragabble.desktop';
+import { DragabbleMobilePage } from './interactions/dragabble/dragabble.mobile';
 
 export class PageFactory {
   static login(page: Page): LoginPage {
@@ -279,5 +294,40 @@ export class PageFactory {
     return width < 768
       ? new SelectMenuMobilePage(page)
       : new SelectMenuDesktopPage(page);
+  }
+
+  static sortable(page: Page): SortablePage {
+    const width = page.viewportSize()?.width ?? 0;
+    return width < 768
+      ? new SortableMobilePage(page)
+      : new SortableDesktopPage(page);
+  }
+
+  static selectable(page: Page): SelectablePage {
+    const width = page.viewportSize()?.width ?? 0;
+    return width < 768
+      ? new SelectableMobilePage(page)
+      : new SelectableDesktopPage(page);
+  }
+
+  static resizable(page: Page): ResizablePage {
+    const width = page.viewportSize()?.width ?? 0;
+    return width < 768
+      ? new ResizableMobilePage(page)
+      : new ResizableDesktopPage(page);
+  }
+
+  static droppable(page: Page): DroppablePage {
+    const width = page.viewportSize()?.width ?? 0;
+    return width < 768
+      ? new DroppableMobilePage(page)
+      : new DroppableDesktopPage(page);
+  }
+
+  static dragabble(page: Page): DragabblePage {
+    const width = page.viewportSize()?.width ?? 0;
+    return width < 768
+      ? new DragabbleMobilePage(page)
+      : new DragabbleDesktopPage(page);
   }
 }
