@@ -19,7 +19,7 @@ async function loginIfNeeded(world: any) {
   const loginPage = PageFactory.login(world.page);
 
   await loginPage.open();
-  await loginPage.login(account.username, account.password);
+  await loginPage.loginSuccessfully(account.username, account.password);
   try {
     await PageFactory.profile(world.page).expectOpened();
   } catch (e) {

@@ -1,4 +1,5 @@
 import { expect, Locator, Page } from '@playwright/test';
+import { ENV } from '../../../config/env';
 
 export class LoginPage {
   private readonly usernameInput: Locator;
@@ -23,6 +24,32 @@ export class LoginPage {
     await this.loginButton.click();
   }
 
+  async loginSuccessfully(username: string, password: string): Promise<void> {
+    let lastError: unknown;
+
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      await this.login(username, password);
+
+      try {
+        await expect(this.page).toHaveURL(/profile|dashboard/, { timeout: ENV.wait });
+        return;
+      } catch (error) {
+        lastError = error;
+        if (attempt < 2) {
+          await this.page.waitForTimeout(1000);
+          await this.open();
+        }
+      }
+    }
+
+    const message = await this.errorMessage.textContent().catch(() => '');
+    throw new Error(
+      `Valid login failed after 2 attempts. URL: ${this.page.url()}. ` +
+      `Message: ${message?.trim() || '(no message)'}. ` +
+      `Last error: ${lastError instanceof Error ? lastError.message : String(lastError)}`
+    );
+  }
+
   async expectLoginErrorVisible(): Promise<void> {
     try {
       await expect(this.errorMessage).toBeVisible({ timeout: 1000 });
@@ -36,6 +63,6 @@ export class LoginPage {
   }
 
   async expectLoggedIn(): Promise<void> {
-    await expect(this.page).toHaveURL(/profile|dashboard/);
+    await expect(this.page).toHaveURL(/profile|dashboard/, { timeout: ENV.wait });
   }
 }

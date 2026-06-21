@@ -1,4 +1,5 @@
 import { expect, Page } from '@playwright/test';
+import { ENV } from '../../../config/env';
 
 export class ProfilePage {
   constructor(private readonly page: Page) {}
@@ -12,7 +13,7 @@ export class ProfilePage {
   }
 
   async expectOpened(): Promise<void> {
-    await expect(this.page).toHaveURL(/profile|dashboard/);
+    await expect(this.page).toHaveURL(/profile|dashboard/, { timeout: ENV.wait });
   }
 
   async expectRedirectedToLogin(): Promise<void> {

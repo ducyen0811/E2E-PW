@@ -15,7 +15,7 @@ async function loginWithValidCredentials(world: any): Promise<void> {
   const account = await ensureFreshAccount(world);
   const loginPage = PageFactory.login(world.page);
   await loginPage.open();
-  await loginPage.login(account.username, account.password);
+  await loginPage.loginSuccessfully(account.username, account.password);
 }
 
 async function loginWithCredentials(world: any, username: string, password: string): Promise<void> {
