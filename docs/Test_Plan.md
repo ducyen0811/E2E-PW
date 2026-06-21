@@ -1,40 +1,29 @@
-# Ke Hoach Kiem Thu - E2E Playwright Automation Framework
+# Ke hoach kiem thu - E2E Playwright Automation Framework
 
 ## 1. Muc tieu
 
-Xay dung va duy tri E2E Playwright Automation Framework cho website DemoQA bang Playwright, Cucumber va TypeScript.
+Tai lieu nay dung de dinh huong viec kiem thu va tu dong hoa cho project E2E Playwright tren DemoQA.
 
 Muc tieu chinh:
 
-- Kiem tra cac luong nguoi dung quan trong da co trong repo.
-- Giu code test gon va de bao tri theo Page Object Model.
-- Ho tro chay test tren desktop va mobile.
-- Co du test case manual de hoc, review va tu dong hoa dan.
-- Khi test fail thi de debug bang report va screenshot.
+- Kiem tra cac flow quan trong dang co trong repo.
+- Giu test de doc, de sua va bam theo Page Object Model.
+- Chay duoc tren desktop, sau do kiem tra lai cac case quan trong tren mobile.
+- Co danh sach manual test case lam co so de review va automate tiep.
+- Khi test fail co report hoac screenshot de debug nhanh hon.
 
-## 2. Pham vi
+## 2. Pham vi kiem thu
 
-### Trong pham vi
-
-| Feature/Module | Trang thai hien tai | Muc tieu coverage |
-|----------------|---------------------|-------------------|
-| Authentication | Da bat dau | Login thanh cong, login that bai, logout, register thanh cong, register that bai |
-| Bookstore | Da bat dau | Tim sach, mo chi tiet sach, them sach, xoa sach, kiem tra sach trong profile |
-| Practice Form | Da bat dau | Gui form hop le, kiem tra modal da submit, them negative case sau |
-| Browser Windows | Da bat dau | Mo tab moi, mo window moi, mo message window |
-| Desktop layout | Da bat dau | Chay smoke va regression tren desktop |
-| Mobile layout | Da bat dau | Chay cac smoke case quan trong tren mobile |
-| Reporting | Da bat dau | Tao Cucumber HTML/JSON report va dinh kem screenshot khi fail |
-
-### Ngoai pham vi
-
-| Feature/Module | Ly do |
-|----------------|-------|
-| Visual regression testing | Chua can thiet khi dang hoc core E2E flow |
-| Performance/load testing | Repo hien tai tap trung vao functional E2E test |
-| Cross-browser matrix | Driver hien tai chi dung Chromium |
-| API-only testing | Framework hien tai tap trung vao UI |
-| Full DemoQA site coverage | Se mo rong dan sau khi cac module hien tai on dinh |
+| Feature/Module | Trang thai | Noi dung can cover |
+|----------------|------------|--------------------|
+| Authentication | Dang co automation | Login thanh cong, login that bai, logout, register thanh cong, register that bai |
+| Bookstore | Dang co automation | Tim sach, mo chi tiet sach, them sach vao collection, xoa sach khoi collection |
+| Practice Form | Dang co automation | Submit form hop le va kiem tra modal sau khi submit |
+| Browser Windows | Dang co automation | Mo tab moi, window moi va message window |
+| Frames | Dang co automation | Kiem tra noi dung frame va nested frame |
+| Desktop layout | Can duy tri | Smoke va regression chay on dinh tren desktop |
+| Mobile layout | Can kiem tra them | Chay lai cac smoke case quan trong tren mobile |
+| Reporting | Dang co cau hinh | Tao Cucumber report va luu screenshot khi scenario fail |
 
 ## 3. Moi truong kiem thu
 
@@ -44,8 +33,7 @@ Muc tieu chinh:
 | Browser | Chromium |
 | Desktop viewport | 1440 x 900 |
 | Mobile profile | iPhone 14 |
-| Test framework | Playwright + Cucumber + TypeScript |
-| Project name | E2E Playwright Automation Framework |
+| Framework | Playwright + Cucumber + TypeScript |
 | Kieu test | BDD voi English Gherkin |
 | Cau hinh local | `.env` |
 | Report output | `reports/json`, `reports/html`, `reports/screenshots` |
@@ -53,64 +41,72 @@ Muc tieu chinh:
 
 ## 4. Test data
 
-| Data | Mo ta | Nguon/Owner |
-|------|------|-------------|
-| DemoQA account | Account duoc tao dong cho login/bookstore flow | Automation helper |
-| Valid login data | Username/password tu account da tao | `src/test-data/user.ts` / world state |
-| Invalid login password | Mat khau sai cho negative login scenario | Test code |
-| Valid register data | First name, last name, username, password | Test code/helper |
-| Invalid register data | Input khong hop le cho register negative scenario | Test code |
-| Practice form data | Name, email, gender, mobile | `src/steps/forms.step.ts` |
-| Book title | `Git Pocket Guide` | Feature file |
-| Search keyword | `Git` | Feature file |
+| Data | Cach dung |
+|------|-----------|
+| DemoQA account | Tao account cho login va bookstore flow |
+| Valid login data | Lay tu account da tao trong test |
+| Invalid login password | Dung cho login negative case |
+| Valid register data | First name, last name, username, password hop le |
+| Invalid register data | Dung cho cac case register fail |
+| Practice form data | Name, email, gender, mobile |
+| Book title | `Git Pocket Guide` |
+| Search keyword | `Git` |
 
-## 5. Chien luoc kiem thu
+## 5. Cach to chuc automation
 
-### Cac lop automation
+Project dang di theo huong Cucumber + Page Object Model:
 
-| Lop | Trach nhiem | Vi du |
-|-----|-------------|-------|
-| Feature file | Mo ta scenario de doc theo nghiep vu | `browser-windows.feature` |
-| Step definition | Noi cau Gherkin voi code | `browser-windows.step.ts` |
-| Page factory | Chon page object desktop/mobile | `PageFactory.browserWindows(this.page)` |
-| Page object contract | Khai bao cac method cua feature | `browser-windows.page.ts` |
-| Page implementation | Chua locator/action/assertion Playwright that | `browser-windows.desktop.ts` |
-| Hooks/world | Quan ly browser lifecycle va state cua scenario | `before.ts`, `after.ts`, `custom.world.ts` |
+| Thanh phan | Vai tro |
+|------------|---------|
+| Feature file | Mo ta scenario bang Gherkin |
+| Step definition | Noi Gherkin step voi code TypeScript |
+| Page object | Chua locator, action va assertion cua tung page |
+| Page factory | Chon dung page object cho desktop hoac mobile |
+| Hooks/world | Quan ly browser, page va state cua scenario |
+| Report | Luu ket qua run test va bang chung khi fail |
 
-### Chien luoc tag
+Nguyen tac khi viet them test:
 
-| Tag | Cach dung |
-|-----|----------|
-| `@smoke` | Cac case nhanh de kiem tra tinh nang quan trong con chay |
-| `@auth` | Scenario lien quan authentication |
-| `@login` | Scenario login |
-| `@logout` | Scenario logout |
-| `@register` | Scenario dang ky |
-| `@negative` | Scenario invalid input hoac expected failure |
-| `@bookstore` | Scenario bookstore |
-| `@forms` | Scenario practice form |
-| `@browser-windows` | Scenario tab/window moi |
-| `@frames` | Scenario frames va nested frames |
-| `@nested-frames` | Scenario nested frames |
-| `@single` | Test nen chay tuan tu |
-| `@parallel` | Test co the chay song song |
+- Step definition chi nen dieu phoi flow, khong nen chua qua nhieu UI logic.
+- Locator va assertion nen nam trong page object.
+- Neu desktop va mobile khac layout, tach implementation thay vi chen nhieu dieu kien trong step.
+- Case nao dung chung account hoac state thi can can nhac tag `@single`.
+- Sau khi them scenario moi, cap nhat manual test case neu scenario do co y nghia regression.
 
-### Chien luoc chay test
+## 6. Tag su dung trong test
 
-| Kieu chay | Lenh | Khi nao dung |
-|-----------|------|--------------|
-| Chay full local | `npm run test` | Truoc khi ket thuc mot thay doi lon |
-| Chay desktop | `npm run test:desktop` | Verify mac dinh o local |
-| Chay mobile | `npm run test:mobile` | Sau khi sua page object/factory |
-| Chay auth | `npm run test:auth:report` | Sau khi sua login/register/logout |
-| Chay bookstore | `npm run test:bookstore:report` | Sau khi sua bookstore/profile |
-| Chay forms | `npm run test:forms:report` | Sau khi sua practice form |
-| Chay browser windows | `npx cucumber-js --tags "@browser-windows"` | Sau khi sua logic popup/window |
-| Chay smoke | `npx cucumber-js --tags "@smoke"` | Kiem tra nhanh cac flow quan trong |
+| Tag | Y nghia |
+|-----|---------|
+| `@smoke` | Case nhanh de check cac flow quan trong |
+| `@auth` | Authentication |
+| `@login` | Login |
+| `@logout` | Logout |
+| `@register` | Register |
+| `@negative` | Case sai input hoac expected failure |
+| `@bookstore` | Bookstore |
+| `@forms` | Practice Form |
+| `@browser-windows` | Browser Windows |
+| `@frames` | Frames |
+| `@nested-frames` | Nested Frames |
+| `@single` | Nen chay tuan tu |
+| `@parallel` | Co the chay song song |
 
-## 6. Danh sach test case du kien
+## 7. Cach chay test
 
-Dung phan nay lam roadmap cho `docs/Manual_Test_Cases.xlsx` va automation sau nay.
+| Muc dich | Lenh |
+|----------|------|
+| Chay full local | `npm run test` |
+| Chay desktop | `npm run test:desktop` |
+| Chay mobile | `npm run test:mobile` |
+| Chay auth co report | `npm run test:auth:report` |
+| Chay bookstore co report | `npm run test:bookstore:report` |
+| Chay forms co report | `npm run test:forms:report` |
+| Chay browser windows | `npx cucumber-js --tags "@browser-windows"` |
+| Chay smoke | `npx cucumber-js --tags "@smoke"` |
+
+## 8. Danh sach test case
+
+Danh sach nay la roadmap cho `docs/Manual_Test_Cases.xlsx` va automation sau nay.
 
 ### Authentication
 
@@ -173,36 +169,36 @@ Dung phan nay lam roadmap cho `docs/Manual_Test_Cases.xlsx` va automation sau na
 | FW-003 | Medium | Factory tra ve dung page object desktop/mobile | Da bat dau |
 | FW-004 | Medium | Relative navigation hoat dong voi `baseURL` | Da bat dau |
 
-## 7. Dieu kien dau vao
+## 9. Dieu kien dau vao
 
-- `.env` da cau hinh `BASE_URL=https://demoqa.com`.
+- `.env` da co `BASE_URL=https://demoqa.com`.
 - Da cai dependency bang `npm install`.
-- Website DemoQA truy cap duoc.
-- Helper tao account DemoQA hoat dong cho auth/bookstore scenario.
-- Feature can test co expected result ro rang.
-- Page object da co hoac da duoc len ke hoach truoc khi viet step logic.
+- DemoQA truy cap duoc tai thoi diem chay test.
+- Helper tao account DemoQA hoat dong cho auth/bookstore.
+- Feature can test da co expected result ro rang.
+- Page object da co san hoac da duoc len ke hoach truoc khi viet step.
 
-## 8. Dieu kien ket thuc
+## 10. Dieu kien ket thuc
 
-- Tat ca scenario `@smoke` pass tren desktop.
-- Cac flow quan trong cua auth, bookstore, forms va browser-window pass.
-- Page object moi di theo pattern cua repo: abstract page + desktop/mobile implementation neu can.
-- Khi test fail co bang chung qua screenshot/report.
-- Bug da biet duoc ghi theo format `docs/Bug_Report_Template.md` hoac duoc chap nhan la limitation.
-- File manual test case duoc cap nhat cho scenario moi duoc automation.
+- Cac scenario `@smoke` pass tren desktop.
+- Flow chinh cua auth, bookstore, forms, browser windows va frames pass.
+- Page object moi dung pattern cua repo.
+- Khi test fail co screenshot hoac report de xem lai.
+- Bug da biet duoc ghi vao `docs/Bug_Report_Template.md` hoac duoc chap nhan la limitation.
+- Manual test case duoc cap nhat neu co scenario moi.
 
-## 9. Rui ro
+## 11. Rui ro
 
-| Rui ro | Anh huong | Cach giam thieu |
-|--------|-----------|-----------------|
-| DemoQA cham hoac khong on dinh | Test fail khong deu | Tang timeout dung cho vi tri can thiet va giu selector on dinh |
-| Ads/overlay chan click | Form/bookstore test co the fail | Dung `scrollIntoViewIfNeeded`, selector on dinh, chi force click khi co ly do |
-| Shared account state anh huong bookstore test | Add/remove book co the xung dot | Tao/cleanup account theo scenario neu co the |
-| Desktop va mobile layout khac nhau | Mobile test fail voi selector desktop | Giu PageFactory va page object mobile rieng |
-| Miss popup event | Browser-window test bi treo | Luon goi `waitForEvent('popup')` truoc khi click |
-| Step definition qua dai | Code test kho bao tri | De UI logic trong page object |
+| Rui ro | Anh huong | Cach xu ly |
+|--------|-----------|------------|
+| DemoQA cham hoac khong on dinh | Test fail khong deu | Tang timeout dung cho noi can thiet va giu selector on dinh |
+| Ads/overlay chan click | Click form/bookstore co the fail | Scroll dung vi tri, dung selector on dinh, chi force click khi co ly do |
+| Account dung chung bi lech state | Bookstore add/remove co the fail | Tao account rieng hoac cleanup truoc/sau scenario |
+| Desktop va mobile khac layout | Mobile test fail voi selector desktop | Dung PageFactory va mobile page object khi can |
+| Popup event bi miss | Browser-window test bi treo | Dat `waitForEvent('popup')` truoc action click |
+| Step definition qua dai | Kho bao tri | Dua UI logic ve page object |
 
-## 10. Deliverables
+## 12. Deliverables
 
 | Deliverable | Path |
 |-------------|------|
@@ -215,15 +211,13 @@ Dung phan nay lam roadmap cho `docs/Manual_Test_Cases.xlsx` va automation sau na
 | Test reports | `reports/html/`, `reports/json/` |
 | Screenshots | `reports/screenshots/` |
 
-## 11. Thu tu nen code tiep
+## 13. Viec nen lam tiep
 
-Nen di theo thu tu nay khi viet automation tiep:
-
-1. On dinh cac smoke test hien tai tren desktop.
-2. Dien `Manual_Test_Cases.xlsx` theo cac test case ID o tren.
+1. Chay lai smoke test tren desktop va fix case fail that su.
+2. Cap nhat `Manual_Test_Cases.xlsx` theo cac ID trong test plan.
 3. Them negative case con thieu cho login va register.
-4. Them negative validation case cho practice form.
-5. Them edge case cho bookstore, vi du search khong co ket qua va add book khi chua login.
-6. Chay lai smoke suite tren mobile va chi fix nhung khac biet layout that su.
-7. Gan `@single` cho test dung chung account/state neu parallel gay xung dot.
-8. Cap nhat README khi them feature folder, script hoac tag moi.
+4. Them validation case cho practice form.
+5. Them edge case cho bookstore: search khong co ket qua, add book khi chua login.
+6. Chay lai smoke suite tren mobile.
+7. Gan `@single` cho case dung chung account/state neu parallel gay loi.
+8. Cap nhat README khi them feature, script hoac tag moi.

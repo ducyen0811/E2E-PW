@@ -136,9 +136,10 @@ E2E-PW/
 # Run all tests
 npm run test
 
-# Run feature groups without report output
+# Run feature groups (JSON and HTML reports are always generated)
 npm run test:auth
 npm run test:bookstore
+npm run test:api
 npm run test:book-store-application
 npm run test:alerts
 npm run test:alerts-frame-windows
@@ -158,10 +159,14 @@ npm run test:mobile
 npm run runner
 ```
 
+All test commands write an HTML report to `reports/html/`, even when all scenarios pass.
+Use `npm run test:api:no-report` only when report output is not needed.
+
 Run Cucumber directly:
 
 ```bash
 npx cucumber-js --tags "@auth"
+npx cucumber-js --tags "@api"
 npx cucumber-js --tags "@smoke"
 npx cucumber-js --tags "@book-store-application"
 npx cucumber-js --tags "@alerts-frame-windows"
@@ -194,6 +199,8 @@ npx.cmd tsc --noEmit
 | `@negative` | Negative validation scenarios |
 | `@book-store-application` | Book Store Application scenarios |
 | `@bookstore` | Bookstore scenarios |
+| `@api` | Book Store REST API scenarios |
+| `@bookstore-api` | Book Store API contract and collection scenarios |
 | `@alerts-frame-windows` | Alerts, Frame & Windows scenarios |
 | `@alerts` | JavaScript alert scenarios |
 | `@elements` | Elements scenarios |
@@ -284,13 +291,13 @@ Grouped DemoQA sections should keep page folders under their section folder, for
 
 ## Reports
 
-When `NO_REPORT` is not `true`, Cucumber writes:
+Every test command writes:
 
 - JSON reports to `reports/json/`
 - HTML reports to `reports/html/`
 - failure screenshots to `reports/screenshots/`
 
-Use report scripts when you want files generated:
+The legacy `:report` aliases remain available and generate the same reports:
 
 ```bash
 npm run test:auth:report

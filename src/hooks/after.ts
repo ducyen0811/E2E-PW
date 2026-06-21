@@ -18,6 +18,10 @@ After(async function (scenario) {
     try { await this.browser.close(); } catch {}
   }
 
+  if (this.api) {
+    try { await this.api.dispose(); } catch {}
+  }
+
   if (this.account) {
     try { await deleteDemoQaAccount(this.account); } catch {}
   }
