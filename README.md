@@ -12,6 +12,7 @@ A lightweight **Playwright + Cucumber + TypeScript** end-to-end automation frame
 - **Relative navigation**: browser contexts use `baseURL`, so page objects can call `page.goto('/path')`.
 - **Screenshots on failure**: failed scenarios attach screenshots to reports.
 - **Reports**: Cucumber JSON/HTML reports are generated under `reports/`.
+- **Continuous Integration**: GitHub Actions checks TypeScript, runs API/UI tests, and uploads reports for every run.
 - **Environment configuration**: runtime options are controlled through `.env`.
 
 ## Prerequisites
@@ -303,6 +304,26 @@ The legacy `:report` aliases remain available and generate the same reports:
 npm run test:auth:report
 npm run test:bookstore:report
 npm run test:forms:report
+```
+
+## Continuous Integration
+
+The workflow at `.github/workflows/ci.yml` runs on pushes to `main`, `master`, or `develop`, on pull requests, manually, and every day at 01:00 Asia/Bangkok time.
+
+CI performs these jobs:
+
+1. `quality-check` installs locked dependencies with `npm ci` and checks TypeScript.
+2. `api-tests` runs the Book Store API suite without installing a browser.
+3. `ui-tests` installs Chromium and runs seven feature groups with a matrix (up to three groups concurrently).
+
+Every test job uploads HTML/JSON reports, screenshots, and Playwright test results even when tests fail. Open a workflow run in GitHub and download the desired file from its **Artifacts** section. Artifacts are retained for 14 days.
+
+Run the same initial checks locally with:
+
+```bash
+npm ci
+npm run typecheck
+npm run test:api
 ```
 
 ## Test Documentation

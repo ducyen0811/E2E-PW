@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "rimraf reports/screenshots reports/json reports/html reports/cucumber.html",
+    "typecheck": "tsc --noEmit",
     "test": "npm run clean && cucumber-js",
     "test:auth": "cucumber-js --tags \"@auth\"",
     "test:bookstore": "cucumber-js --tags \"@bookstore\"",
