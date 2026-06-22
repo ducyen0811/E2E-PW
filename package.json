@@ -4,7 +4,7 @@
   "description": "E2E Playwright Automation Framework for DemoQA using Playwright, Cucumber, TypeScript, and Page Object Model.",
   "main": "index.js",
   "scripts": {
-    "clean": "rimraf reports/screenshots reports/json reports/html reports/cucumber.html",
+    "clean": "node scripts/clean-reports.js",
     "typecheck": "tsc --noEmit",
     "test": "npm run clean && cucumber-js",
     "test:auth": "cucumber-js --tags \"@auth\"",
