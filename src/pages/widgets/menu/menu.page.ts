@@ -1,4 +1,5 @@
 import { expect, Locator, Page } from '@playwright/test';
+import { ENV } from '../../../config/env';
 
 export class MenuPage {
   private readonly title: Locator;
@@ -9,16 +10,16 @@ export class MenuPage {
 
   constructor(protected readonly page: Page) {
     this.title = page.locator('h1');
-    // Hover the owning <li> elements because their CSS :hover state controls
-    // submenu visibility. Hovering only the link text is flaky headlessly.
-    this.mainItemTwo = page.locator('#nav > li')
-      .filter({ has: page.getByRole('link', { name: 'Main Item 2', exact: true }) })
-      .first();
-    this.subSubList = this.mainItemTwo.locator(':scope > ul > li')
-      .filter({ hasText: /^SUB SUB LIST/ })
-      .first();
-    this.subSubItemOne = this.subSubList.getByRole('link', { name: 'Sub Sub Item 1', exact: true });
-    this.subSubItemTwo = this.subSubList.getByRole('link', { name: 'Sub Sub Item 2', exact: true });
+    // DemoQA's menu visibility is driven by this exact nested <li> hierarchy.
+    // Structural selectors avoid matching hidden descendant/duplicate items.
+    this.mainItemTwo = page.locator('#nav > li:nth-child(2) > a');
+    this.subSubList = page.locator('#nav > li:nth-child(2) > ul > li:nth-child(3) > a');
+    this.subSubItemOne = page.locator(
+      '#nav > li:nth-child(2) > ul > li:nth-child(3) > ul > li:nth-child(1) > a'
+    );
+    this.subSubItemTwo = page.locator(
+      '#nav > li:nth-child(2) > ul > li:nth-child(3) > ul > li:nth-child(2) > a'
+    );
   }
 
   async open(): Promise<void> {
@@ -33,13 +34,13 @@ export class MenuPage {
   async hoverNestedMenu(): Promise<void> {
     await this.mainItemTwo.scrollIntoViewIfNeeded();
     await this.mainItemTwo.hover();
-    await expect(this.subSubList).toBeVisible();
+    await expect(this.subSubList).toBeVisible({ timeout: ENV.wait });
     await this.subSubList.hover();
-    await expect(this.subSubItemOne).toBeVisible();
+    await expect(this.subSubItemOne).toBeVisible({ timeout: ENV.wait });
   }
 
   async expectNestedItemsVisible(): Promise<void> {
-    await expect(this.subSubItemOne).toBeVisible();
-    await expect(this.subSubItemTwo).toBeVisible();
+    await expect(this.subSubItemOne).toBeVisible({ timeout: ENV.wait });
+    await expect(this.subSubItemTwo).toBeVisible({ timeout: ENV.wait });
   }
 }
