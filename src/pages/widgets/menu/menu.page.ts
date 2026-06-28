@@ -10,10 +10,9 @@ export class MenuPage {
 
   constructor(protected readonly page: Page) {
     this.title = page.locator('h1');
-    // DemoQA's menu visibility is driven by this exact nested <li> hierarchy.
-    // Structural selectors avoid matching hidden descendant/duplicate items.
-    this.mainItemTwo = page.locator('#nav > li:nth-child(2) > a');
-    this.subSubList = page.locator('#nav > li:nth-child(2) > ul > li:nth-child(3) > a');
+    // The owning <li> elements control submenu visibility through CSS :hover.
+    this.mainItemTwo = page.locator('#nav > li:nth-child(2)');
+    this.subSubList = this.mainItemTwo.locator(':scope > ul > li:nth-child(3)');
     this.subSubItemOne = page.locator(
       '#nav > li:nth-child(2) > ul > li:nth-child(3) > ul > li:nth-child(1) > a'
     );
@@ -28,19 +27,40 @@ export class MenuPage {
 
   async expectLoaded(): Promise<void> {
     await expect(this.title).toHaveText('Menu');
-    await expect(this.mainItemTwo).toBeVisible();
+    await expect(this.mainItemTwo.locator(':scope > a')).toBeVisible();
   }
 
   async hoverNestedMenu(): Promise<void> {
     await this.mainItemTwo.scrollIntoViewIfNeeded();
-    await this.mainItemTwo.hover();
-    await expect(this.subSubList).toBeVisible({ timeout: ENV.wait });
-    await this.subSubList.hover();
-    await expect(this.subSubItemOne).toBeVisible({ timeout: ENV.wait });
+    await this.expectNestedMenuRevealed();
   }
 
   async expectNestedItemsVisible(): Promise<void> {
-    await expect(this.subSubItemOne).toBeVisible({ timeout: ENV.wait });
-    await expect(this.subSubItemTwo).toBeVisible({ timeout: ENV.wait });
+    // Re-establish the CSS hover chain during the assertion. A late ad layout
+    // shift or the boundary between Cucumber steps can move the menu away from
+    // the pointer and collapse it even though the preceding hover succeeded.
+    await this.expectNestedMenuRevealed();
+  }
+
+  private async expectNestedMenuRevealed(): Promise<void> {
+    await expect.poll(async () => {
+      try {
+        await this.revealNestedMenu(1000);
+        return await Promise.all([
+          this.subSubItemOne.isVisible(),
+          this.subSubItemTwo.isVisible()
+        ]);
+      } catch {
+        return [false, false];
+      }
+    }, { timeout: ENV.wait }).toEqual([true, true]);
+  }
+
+  private async revealNestedMenu(timeout = ENV.wait): Promise<void> {
+    await this.mainItemTwo.locator(':scope > a').hover({ timeout });
+    await expect(this.subSubList).toBeVisible({ timeout });
+    // It is already visible; skip the extra stability wait because DemoQA ads
+    // can shift the submenu and collapse it while Playwright is waiting.
+    await this.subSubList.locator(':scope > a').hover({ timeout, force: true });
   }
 }
